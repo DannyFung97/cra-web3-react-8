@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
+import WalletManager from './context/WalletManager'
+import GeneralManager from './context/GeneralManager'
+import NetworkManager from './context/NetworkManager'
+import { Home } from './pages/Home'
+import ProviderManager from './context/ProviderManager'
+import { Buffer } from 'buffer'
 
-function App() {
+window.Buffer = window.Buffer || Buffer
+
+function App(): JSX.Element {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <GeneralManager>
+      <WalletManager>
+        <NetworkManager>
+          <ProviderManager>
+            <Home />
+          </ProviderManager>
+        </NetworkManager>
+      </WalletManager>
+    </GeneralManager>
+  )
 }
 
-export default App;
+export default App
