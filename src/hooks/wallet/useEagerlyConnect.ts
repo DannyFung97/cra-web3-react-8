@@ -1,6 +1,6 @@
 import { useWeb3React } from '@web3-react/core'
 import { useEffect, useState } from 'react'
-import { CONNECTION_TO_CONNECTION_TYPE, injectedConnection } from '../../wallet'
+import { CONNECTION_TYPE_TO_CONNECTION, injectedConnection } from '../../wallet'
 import { Connection } from '../../wallet'
 
 export const useEagerConnect = (
@@ -13,20 +13,27 @@ export const useEagerConnect = (
   const [tried, setTried] = useState(false)
 
   useEffect(() => {
-    if (selectedProvider) {
-      const connection = CONNECTION_TO_CONNECTION_TYPE[selectedProvider]
-      if (connection) {
-        connect(connection, true)
+    const tryConnectEagerly = async () => {
+      if (selectedProvider && !triedLocallyStored) {
+        const connection = CONNECTION_TYPE_TO_CONNECTION[selectedProvider]
+        if (connection) {
+          await connect(connection, true)
+        }
       }
+      setTriedLocallyStored(true)
     }
-    setTriedLocallyStored(true)
-  }, [connect, selectedProvider])
+    tryConnectEagerly()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Try injected connector if the web3 is still not active & already tried using locally stored provider
   useEffect(() => {
-    if (!isActive && triedLocallyStored && (window as any).ethereum && !manuallyDisconnected) {
-      connect(injectedConnection).catch(() => setTried(true))
+    const tryConnect = async () => {
+      if (!isActive && triedLocallyStored && (window as any).ethereum && !manuallyDisconnected) {
+        await connect(injectedConnection).catch(() => setTried(true))
+      }
     }
+    tryConnect()
   }, [connect, isActive, triedLocallyStored, manuallyDisconnected])
 
   // wait until we get confirmation of a connection to flip the flag

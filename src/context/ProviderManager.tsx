@@ -51,7 +51,7 @@ function ProviderManager(props: PropsWithChildren): JSX.Element {
   const { activeNetwork, changeNetwork } = useNetwork()
   const provider = useMemo(() => RPC_PROVIDERS[activeNetwork.chainId], [activeNetwork.chainId])
   const signer = useMemo(() => (account && library ? getSigner(library, account) : undefined), [library, account])
-  const { blockNumber, blockTimestamp } = useGetLatestBlock(provider)
+  const { blockNumber, blockTimestamp } = useGetLatestBlock(activeNetwork.chainId, provider)
 
   const [networkModal, setNetworkModal] = useState<boolean>(false)
   const [showTestnets, setShowTestnets] = useState<boolean>(true)

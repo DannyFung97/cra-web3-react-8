@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { Connection } from '../../wallet'
 
@@ -11,9 +11,12 @@ export const useWalletHandler = (
   disconnect: () => void
 } => {
   const { connector } = useWeb3React()
+  const connecting = useRef(false)
 
   const connect = useCallback(
     async (connection: Connection, eagerlyConnect?: boolean) => {
+      if (connecting.current) return
+      connecting.current = true
       try {
         if (connection.connector.connectEagerly && eagerlyConnect) {
           await connection.connector.connectEagerly()
@@ -25,6 +28,7 @@ export const useWalletHandler = (
         console.log('error', error)
         onError()
       }
+      connecting.current = false
 
       function onSuccess() {
         setSelectedProvider?.(connection.type)

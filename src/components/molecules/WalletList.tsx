@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { useWallet } from '../../context/WalletManager'
-import { CONNECTION_TO_CONNECTION_TYPE, SELECTABLE_WALLETS } from '../../wallet'
+import { CONNECTION_TYPE_TO_CONNECTION, SELECTABLE_WALLETS } from '../../wallet'
 // import { Flex } from '../atoms/Layout'
 // import { Text } from '../atoms/Typography'
 import { ModalCell } from '../atoms/Modal'
@@ -10,7 +10,7 @@ export const WalletList = () => {
 
   const connectWallet = useCallback(
     async (id: string) => {
-      const foundWalletConnection = CONNECTION_TO_CONNECTION_TYPE[id]
+      const foundWalletConnection = CONNECTION_TYPE_TO_CONNECTION[id]
       if (!foundWalletConnection) return
       await connect(foundWalletConnection)
     },

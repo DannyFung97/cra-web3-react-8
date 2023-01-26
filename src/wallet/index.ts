@@ -122,10 +122,39 @@ export const SUPPORTED_WALLETS = [
 
 export const SELECTABLE_WALLETS = [injectedConnection, coinbaseWalletConnection, walletConnectConnection]
 
-export const CONNECTION_TO_CONNECTION_TYPE: { [key: string]: Connection } = SUPPORTED_WALLETS.reduce(
+export const CONNECTION_TYPE_TO_CONNECTION: { [key: string]: Connection } = SUPPORTED_WALLETS.reduce(
   (map, connection) => ({
     ...map,
     [connection.type]: connection,
   }),
   {}
 )
+
+export function getIsBraveWallet(): boolean {
+  return window.ethereum?.isBraveWallet ?? false
+}
+
+export function getIsMetaMaskWallet(): boolean {
+  // When using Brave browser, `isMetaMask` is set to true when using the built-in wallet
+  // This function should return true only when using the MetaMask extension
+  // https://wallet-docs.brave.com/ethereum/wallet-detection#compatability-with-metamask
+  return (window.ethereum?.isMetaMask ?? false) && !getIsBraveWallet()
+}
+
+export function getConnectionName(
+  connectionType: ConnectionType,
+  hasMetaMaskExtension: boolean = getIsMetaMaskWallet()
+): string {
+  switch (connectionType) {
+    case ConnectionType.INJECTED:
+      return hasMetaMaskExtension ? 'MetaMask' : 'Browser Wallet'
+    case ConnectionType.COINBASE_WALLET:
+      return 'Coinbase Wallet'
+    case ConnectionType.WALLET_CONNECT:
+      return 'WalletConnect'
+    case ConnectionType.NETWORK:
+      return 'Network'
+    case ConnectionType.GNOSIS_SAFE:
+      return 'Gnosis Safe'
+  }
+}

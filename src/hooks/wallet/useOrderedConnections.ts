@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Connection, ConnectionType, CONNECTION_TO_CONNECTION_TYPE, SELECTABLE_WALLETS } from '../../wallet'
+import { Connection, ConnectionType, CONNECTION_TYPE_TO_CONNECTION, SELECTABLE_WALLETS } from '../../wallet'
 
 export default function useOrderedConnections(selectedProvider?: string): Connection[] {
   const selectedWallet = selectedProvider
@@ -20,6 +20,7 @@ export default function useOrderedConnections(selectedProvider?: string): Connec
     // Add network connection last as it should be the fallback.
     orderedConnectionTypes.push(ConnectionType.NETWORK)
 
-    return orderedConnectionTypes.map((type) => CONNECTION_TO_CONNECTION_TYPE[type])
+    const map = orderedConnectionTypes.map((type) => CONNECTION_TYPE_TO_CONNECTION[type])
+    return map
   }, [selectedWallet])
 }

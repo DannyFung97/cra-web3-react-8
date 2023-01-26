@@ -5,6 +5,7 @@ import { Connector } from '@web3-react/types'
 import useOrderedConnections from '../hooks/wallet/useOrderedConnections'
 import { lightTheme, darkTheme } from '../styles/themes'
 import { ThemeProvider } from 'styled-components'
+import { Connection, getConnectionName } from '../wallet'
 
 type GeneralContextType = {
   selectedProvider?: string
@@ -34,6 +35,7 @@ function GeneralManager(props: PropsWithChildren): JSX.Element {
 
   const connections = useOrderedConnections(selectedProvider)
   const connectors: [Connector, Web3ReactHooks][] = connections.map(({ hooks, connector }) => [connector, hooks])
+  const key = useMemo(() => connections.map(({ type }: Connection) => getConnectionName(type)).join('-'), [connections])
 
   const toggleTheme = useCallback(() => {
     if (appTheme === 'light') {
@@ -60,7 +62,7 @@ function GeneralManager(props: PropsWithChildren): JSX.Element {
   )
 
   return (
-    <Web3ReactProvider connectors={connectors}>
+    <Web3ReactProvider connectors={connectors} key={key}>
       <ThemeProvider theme={theme}>
         <GeneralContext.Provider value={value}>{props.children}</GeneralContext.Provider>
       </ThemeProvider>

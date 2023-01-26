@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { BlockData } from '../../constants/types'
 
-export const useGetLatestBlock = (library?: any): BlockData => {
+export const useGetLatestBlock = (chainId: number, library?: any): BlockData => {
   const [blockNumber, setBlockNumber] = useState<number | undefined>(undefined)
   const [blockTimestamp, setBlockTimestamp] = useState<number | undefined>(undefined)
   const running = useRef(false)
@@ -19,7 +19,7 @@ export const useGetLatestBlock = (library?: any): BlockData => {
     return () => {
       library.removeAllListeners()
     }
-  }, [library])
+  }, [library, chainId])
 
   return { blockNumber, blockTimestamp }
 }
