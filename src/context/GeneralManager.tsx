@@ -1,27 +1,48 @@
 import { useLocalStorage } from 'react-use-storage'
-import React, { createContext, PropsWithChildren, useCallback, useContext, useMemo, useState } from 'react'
+import React, { createContext, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { Web3ReactHooks, Web3ReactProvider } from '@web3-react/core'
 import { Connector } from '@web3-react/types'
 import useOrderedConnections from '../hooks/wallet/useOrderedConnections'
 import { lightTheme, darkTheme } from '../styles/themes'
 import { ThemeProvider } from 'styled-components'
 import { Connection, getConnectionName } from '../wallet'
+import { useReload } from '../hooks'
 
 type GeneralContextType = {
   selectedProvider?: string
+  pathname: string
+  appTheme: 'light' | 'dark'
+  clock: {
+    positiveVersion: number
+    negativeVersion: number
+    minute: number
+    positiveReload: () => void
+    negativeReload: () => void
+  }
   setSelectedProvider: (provider?: string) => void
   removeSelectedProvider: () => void
   handlePathNameChange: (pathname: string) => void
+  toggleTheme: () => void
 }
 
 const GeneralContext = createContext<GeneralContextType>({
   selectedProvider: undefined,
+  pathname: '/',
+  appTheme: 'light',
+  clock: {
+    positiveVersion: 0,
+    negativeVersion: 0,
+    minute: 0,
+    positiveReload: () => undefined,
+    negativeReload: () => undefined,
+  },
   setSelectedProvider: () => undefined,
   removeSelectedProvider: () => undefined,
   handlePathNameChange: () => undefined,
+  toggleTheme: () => undefined,
 })
 
-function GeneralManager(props: PropsWithChildren): JSX.Element {
+export function GeneralManager(props: PropsWithChildren): JSX.Element {
   const [selectedProvider, setSelectedProvider, removeSelectedProvider] = useLocalStorage<string | undefined>(
     'new_wallet_0'
   )
@@ -32,6 +53,10 @@ function GeneralManager(props: PropsWithChildren): JSX.Element {
   const appTheme: 'light' | 'dark' = selectedTheme ?? 'light'
   const theme = appTheme == 'light' ? lightTheme : darkTheme
   const [pathname, setPathname] = useState('/')
+
+  const [positiveReload, positiveVersion] = useReload()
+  const [negativeReload, negativeVersion] = useReload()
+  const [minReload, minute] = useReload()
 
   const connections = useOrderedConnections(selectedProvider)
   const connectors: [Connector, Web3ReactHooks][] = connections.map(({ hooks, connector }) => [connector, hooks])
@@ -49,16 +74,44 @@ function GeneralManager(props: PropsWithChildren): JSX.Element {
     setPathname(pathname)
   }, [])
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      minReload()
+    }, 60000)
+    return () => clearInterval(interval)
+  }, [])
+
   const value = useMemo<GeneralContextType>(
     () => ({
       selectedProvider,
       pathname,
+      clock: {
+        positiveVersion,
+        negativeVersion,
+        minute,
+        positiveReload,
+        negativeReload,
+      },
+      appTheme,
       setSelectedProvider,
       removeSelectedProvider,
       handlePathNameChange,
       toggleTheme,
     }),
-    [selectedProvider, pathname, setSelectedProvider, removeSelectedProvider, handlePathNameChange, toggleTheme]
+    [
+      selectedProvider,
+      pathname,
+      appTheme,
+      setSelectedProvider,
+      removeSelectedProvider,
+      handlePathNameChange,
+      toggleTheme,
+      positiveVersion,
+      negativeVersion,
+      minute,
+      positiveReload,
+      negativeReload,
+    ]
   )
 
   return (
@@ -73,5 +126,3 @@ function GeneralManager(props: PropsWithChildren): JSX.Element {
 export function useGeneral(): GeneralContextType {
   return useContext(GeneralContext)
 }
-
-export default GeneralManager

@@ -18,7 +18,7 @@ const WalletContext = createContext<WalletContextType>({
   openWalletModal: () => undefined,
 })
 
-function WalletManager(props: PropsWithChildren): JSX.Element {
+export function WalletManager(props: PropsWithChildren): JSX.Element {
   const { selectedProvider, setSelectedProvider, removeSelectedProvider } = useGeneral()
   const [manuallyDisconnected, setManuallyDisconnected] = useState(false)
 
@@ -52,5 +52,3 @@ function WalletManager(props: PropsWithChildren): JSX.Element {
 export function useWallet(): WalletContextType {
   return useContext(WalletContext)
 }
-
-export default WalletManager

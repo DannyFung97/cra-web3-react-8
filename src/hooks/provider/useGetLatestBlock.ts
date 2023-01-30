@@ -1,14 +1,18 @@
+import { useWeb3React } from '@web3-react/core'
 import { useEffect, useRef, useState } from 'react'
 import { BlockData } from '../../constants/types'
 
-export const useGetLatestBlock = (chainId: number, library?: any): BlockData => {
+export const useGetLatestBlock = (): BlockData => {
+  const { chainId, provider } = useWeb3React()
+
   const [blockNumber, setBlockNumber] = useState<number | undefined>(undefined)
   const [blockTimestamp, setBlockTimestamp] = useState<number | undefined>(undefined)
   const running = useRef(false)
 
   useEffect(() => {
-    if (!library) return
-    library.on('block', async (res: number) => {
+    if (!provider) return
+    provider.on('block', async (res: number) => {
+      console.log('block number', res)
       if (running.current) return
       running.current = true
       setBlockNumber(res)
@@ -17,9 +21,9 @@ export const useGetLatestBlock = (chainId: number, library?: any): BlockData => 
     })
 
     return () => {
-      library.removeAllListeners()
+      provider.removeAllListeners()
     }
-  }, [library, chainId])
+  }, [provider, chainId])
 
   return { blockNumber, blockTimestamp }
 }

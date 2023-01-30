@@ -5,12 +5,13 @@ import { Modal } from '../components/molecules/Modal'
 
 import { useGetLatestBlock } from '../hooks/provider/useGetLatestBlock'
 import ToggleSwitch from '../components/atoms/ToggleSwitch/ToggleSwitch'
-import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { StaticJsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { useWeb3React } from '@web3-react/core'
 import { getSigner } from '../utils'
-import { BlockData, Network } from '../constants/types'
+import { BlockData, GasData, Network } from '../constants/types'
 import { Scrollable } from '../components/atoms/Scrollable'
 import { NETWORKS, RPC_PROVIDERS } from '../constants/networks'
+import { useFetchGasData } from '../hooks/provider/useGas'
 
 /*
 
@@ -30,10 +31,11 @@ and write to the blockchain.
 */
 
 type ProviderContextType = {
-  provider: JsonRpcProvider
+  provider: StaticJsonRpcProvider
   signer?: JsonRpcSigner
   openNetworkModal: () => void
   latestBlock: BlockData
+  gasData: GasData | undefined
 }
 
 const ProviderContext = createContext<ProviderContextType>({
@@ -44,14 +46,16 @@ const ProviderContext = createContext<ProviderContextType>({
     blockNumber: undefined,
     blockTimestamp: undefined,
   },
+  gasData: undefined,
 })
 
-function ProviderManager(props: PropsWithChildren): JSX.Element {
+export function ProviderManager(props: PropsWithChildren): JSX.Element {
   const { account, provider: library } = useWeb3React()
   const { activeNetwork, changeNetwork } = useNetwork()
   const provider = useMemo(() => RPC_PROVIDERS[activeNetwork.chainId], [activeNetwork.chainId])
   const signer = useMemo(() => (account && library ? getSigner(library, account) : undefined), [library, account])
-  const { blockNumber, blockTimestamp } = useGetLatestBlock(activeNetwork.chainId, provider)
+  const { blockNumber, blockTimestamp } = useGetLatestBlock()
+  const gasData = useFetchGasData(provider)
 
   const [networkModal, setNetworkModal] = useState<boolean>(false)
   const [showTestnets, setShowTestnets] = useState<boolean>(true)
@@ -86,8 +90,9 @@ function ProviderManager(props: PropsWithChildren): JSX.Element {
         blockNumber,
         blockTimestamp,
       },
+      gasData,
     }),
-    [openModal, blockNumber, blockTimestamp, provider, signer]
+    [openModal, blockNumber, blockTimestamp, provider, signer, gasData]
   )
 
   return (
@@ -132,5 +137,3 @@ function ProviderManager(props: PropsWithChildren): JSX.Element {
 export function useProvider(): ProviderContextType {
   return useContext(ProviderContext)
 }
-
-export default ProviderManager

@@ -31,7 +31,7 @@ const NetworkContext = createContext<NetworkContextType>({
   changeNetwork: () => Promise.reject(),
 })
 
-function NetworkManager(props: PropsWithChildren): JSX.Element {
+export function NetworkManager(props: PropsWithChildren): JSX.Element {
   const { chainId, provider: library, account, connector } = useWeb3React()
   const [unconnectedChainId, setUnconnectedChainId] = React.useState<number | undefined>(undefined)
 
@@ -152,5 +152,3 @@ function NetworkManager(props: PropsWithChildren): JSX.Element {
 export function useNetwork(): NetworkContextType {
   return useContext(NetworkContext)
 }
-
-export default NetworkManager

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { useWallet } from '../../context/WalletManager'
+import { useWallet } from '../../context'
 import { CONNECTION_TYPE_TO_CONNECTION, SELECTABLE_WALLETS } from '../../wallet'
 // import { Flex } from '../atoms/Layout'
 // import { Text } from '../atoms/Typography'

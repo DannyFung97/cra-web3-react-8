@@ -18,7 +18,7 @@
 import React, { useCallback, useEffect } from 'react'
 
 /* import managers */
-import { useWallet } from '../../../context/WalletManager'
+import { useWallet } from '../../../context'
 
 /* import components */
 import { Modal } from '../../molecules/Modal'
