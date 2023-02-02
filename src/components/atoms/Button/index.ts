@@ -9,7 +9,7 @@ export interface ClickProps {
 
 export interface ButtonProps extends ClickProps {
   white?: boolean
-  info?: boolean
+  action?: boolean
   success?: boolean
   error?: boolean
   warning?: boolean
@@ -24,7 +24,7 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
     let textColor = `${theme.accentTextLightPrimary}`
     let bgColor = `${theme.accentActionSoft}`
 
-    if (props.info) bgColor = `${theme.accentActionSoft}`
+    if (props.action) bgColor = `${theme.accentActionSoft}`
     if (props.success) bgColor = `${theme.accentSuccessSoft}`
     if (props.warning) bgColor = `${theme.accentWarningSoft}`
     if (props.error) bgColor = `${theme.accentFailureSoft}`
@@ -43,7 +43,7 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
   let bgColor: string = theme.accentAction
   let hoverBgColor: string = theme.accentActionHighlighted
 
-  if (props.info) bgColor = `${theme.accentAction}`
+  if (props.action) bgColor = `${theme.accentAction}`
   if (props.success) bgColor = `${theme.accentSuccess}`
   if (props.warning) bgColor = `${theme.accentWarning}`
   if (props.error) bgColor = `${theme.accentFailure}`
@@ -54,7 +54,7 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
   }
 
   if (!props.nohover) {
-    if (props.info) hoverBgColor = `${theme.accentActionHighlighted}`
+    if (props.action) hoverBgColor = `${theme.accentActionHighlighted}`
     if (props.success) hoverBgColor = `${theme.accentSuccessHighlighted}`
     if (props.warning) hoverBgColor = `${theme.accentWarningHighlighted}`
     if (props.error) hoverBgColor = `${theme.accentFailureHighlighted}`

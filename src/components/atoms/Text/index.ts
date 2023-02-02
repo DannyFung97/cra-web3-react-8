@@ -23,7 +23,7 @@ export interface TextStyleProps extends GeneralProps {
 
   nowrap?: boolean
   mont?: boolean
-  info?: boolean
+  action?: boolean
   success?: boolean
   warning?: boolean
   error?: boolean
@@ -117,7 +117,7 @@ export const TextStyleCss = css<TextStyleProps>`
 
   ${(props) => props.nowrap && `white-space: nowrap;`}
   ${(props) => props.mont && `font-family: Montserrat;`}
-  ${(props) => props.info && `color: ${props.theme.accentAction};`}
+  ${(props) => props.action && `color: ${props.theme.accentAction};`}
   ${(props) => props.success && `color: ${props.theme.accentSuccess};`}
   ${(props) => props.warning && `color: ${props.theme.accentWarning};`}
   ${(props) => props.error && `color: ${props.theme.accentFailure};`}

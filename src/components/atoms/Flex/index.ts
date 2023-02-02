@@ -29,7 +29,7 @@ export interface FlexProps extends ButtonProps, GeneralProps {
   thinScrollbar?: boolean
   zIndex?: number
 
-  bgInfo?: boolean
+  bgAction?: boolean
   bgSuccess?: boolean
   bgWarn?: boolean
   bgError?: boolean
@@ -62,7 +62,7 @@ export const Flex = styled.div<FlexProps>`
   ${({ thinScrollbar }) => thinScrollbar               ? ThinScrollbarCss                                                 : ""}
   ${({ zIndex })        => zIndex        !== undefined ? css`z-index: ${zIndex};`                                         : ""}
   
-  ${(props)             => props.bgInfo                ? css`background-color: ${(props.theme).accentAction};` : ""}
+  ${(props)             => props.bgAction                ? css`background-color: ${(props.theme).accentAction};` : ""}
   ${(props)             => props.bgError               ? css`background-color: ${(props.theme).accentCritical};` : ""}
   ${(props)             => props.bgSuccess             ? css`background-color: ${(props.theme).accentSuccess};` : ""}
   ${(props)             => props.bgWarn                ? css`background-color: ${(props.theme).accentWarning};` : ""}

@@ -11,7 +11,7 @@ interface CardProps extends ClickProps, FlexProps {
   success?: boolean
   warning?: boolean
   error?: boolean
-  info?: boolean
+  action?: boolean
   inquiry?: boolean
 }
 
@@ -24,7 +24,7 @@ const CardCss = css<CardProps>`
   padding: 16px;
   background: ${({ theme }) => theme.backgroundInteractive};
   ${(props) => props.success && `background: ${props.theme.accentSuccess};`}
-  ${(props) => props.info && `background: ${props.theme.accentAction};`}
+  ${(props) => props.action && `background: ${props.theme.accentAction};`}
   ${(props) => props.warning && `background: ${props.theme.accentWarning};`}
   ${(props) => props.error && `background: ${props.theme.accentCritical};`}
   ${(props) => props.inquiry && `background: ${props.theme.accentInquiry};`}

@@ -8,7 +8,9 @@ import { Flex } from '../components/atoms/Flex'
 import { Scrollable } from '../components/atoms/Scrollable'
 import { Table, TableBody, TableData, TableFoot, TableHead, TableHeader, TableRow } from '../components/atoms/Table'
 import { Tdiv } from '../components/atoms/Text'
+import { CheckboxOption } from '../components/molecules/CheckboxOption'
 import { SmallerInputSection } from '../components/molecules/InputSection'
+import { StyledTooltip } from '../components/molecules/Tooltip'
 import { BalanceDropdownOptions, GenericInputSection } from '../components/organisms/Dropdown'
 import { ZERO, Z_TABLE } from '../constants'
 import { TransactionCondition } from '../constants/enums'
@@ -48,6 +50,7 @@ export function Home(): JSX.Element {
   const [selectedD1, setSelectedD1] = useState<ReadToken | undefined>(undefined)
   const [d1Input, setD1Input] = useState<string>('')
   const [inputValue, setInputValue] = useState('')
+  const [checked, setChecked] = useState(false)
 
   const successToast = async () => {
     const now = Date.now()
@@ -134,7 +137,7 @@ export function Home(): JSX.Element {
             <Tdiv darkPrimary>darkPrimary</Tdiv>
             <Tdiv darkSecondary>darkSecondary</Tdiv>
             <Tdiv darkTertiary>darkTertiary</Tdiv>
-            <Tdiv info>info</Tdiv>
+            <Tdiv action>action</Tdiv>
             <Tdiv success>success</Tdiv>
             <Tdiv warning>warning</Tdiv>
             <Tdiv error>error</Tdiv>
@@ -235,7 +238,7 @@ export function Home(): JSX.Element {
               nohover
               isOpen={d1}
               placeholder={'$'}
-              frontIcon={<>Test</>}
+              frontIcon={<>Icon</>}
               frontButtonText={'Fixed'}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -245,7 +248,7 @@ export function Home(): JSX.Element {
               nohover
               isOpen={d1}
               placeholder={'$'}
-              frontIcon={<>Test</>}
+              frontIcon={<>Icon</>}
               frontButtonText={'Fixed'}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -254,8 +257,8 @@ export function Home(): JSX.Element {
               hasArrow
               isOpen={d1}
               placeholder={'$'}
-              frontIcon={<>Test</>}
-              frontButtonText={selectedD1?.symbol ?? 'Select a coin'}
+              frontIcon={<>Icon</>}
+              frontButtonText={selectedD1?.symbol ?? 'Test'}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onClickFront={() => setD1(!d1)}
@@ -264,13 +267,13 @@ export function Home(): JSX.Element {
               hasArrow
               isOpen={d1}
               placeholder={'$'}
-              frontIcon={<>Test</>}
-              frontButtonText={selectedD1?.symbol ?? 'Select a coin'}
+              frontIcon={<>Icon</>}
+              frontButtonText={selectedD1?.symbol ?? 'Test'}
               backButtonText={'Max Value'}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onClickFront={() => setD1(!d1)}
-              onClickBack={() => console.log('max')}
+              onClickBack={() => setInputValue('max')}
             />
             <GenericInputSection
               hasArrow
@@ -279,19 +282,19 @@ export function Home(): JSX.Element {
               backButtonText={'Max Value'}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onClickBack={() => console.log('max')}
+              onClickBack={() => setInputValue('max')}
             />
             <GenericInputSection
               hasArrow
               isOpen={d1}
               placeholder={'$'}
-              frontIcon={<>Test</>}
-              frontButtonText={selectedD1?.symbol ?? 'Select a coin'}
+              frontIcon={<>Icon</>}
+              frontButtonText={selectedD1?.symbol ?? 'Test'}
               backButtonText={'Max Value'}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onClickFront={() => setD1(!d1)}
-              onClickBack={() => console.log('max')}
+              onClickBack={() => setInputValue('max')}
               backButtonDisabled
             />
             <BalanceDropdownOptions
@@ -308,6 +311,22 @@ export function Home(): JSX.Element {
           </Flex>
           <Flex col gap={4}>
             <SmallerInputSection placeholder="Search" value={d1Input} onChange={(e) => setD1Input(e.target.value)} />
+            <CheckboxOption isChecked={checked} setChecked={setChecked} text={'Check me'} />
+            <StyledTooltip id={'tt'} tip={'I am a tooltip'} alwaysShowChildren>
+              <Button>Hover over me</Button>
+            </StyledTooltip>
+            <StyledTooltip
+              id={'tt1'}
+              tip={
+                'I am a tooltip with a very long sentence that should ideally be broken into multiple lines so it is easier for the user.'
+              }
+              alwaysShowChildren
+            >
+              <Button>Hover over me</Button>
+            </StyledTooltip>
+            <StyledTooltip id={'tt2'} tip={'I am a tooltip with a link'} alwaysShowChildren link={'https://google.com'}>
+              <Button>Hover over me</Button>
+            </StyledTooltip>
           </Flex>
         </Flex>
       </Flex>

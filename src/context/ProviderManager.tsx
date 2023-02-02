@@ -103,7 +103,7 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
     <ProviderContext.Provider value={value}>
       <Modal handleClose={closeModal} isOpen={networkModal} modalTitle={'Connect to a network'} zIndex={Z_MODAL + 1}>
         <Flex col gap={10}>
-          <Card info>
+          <Card inquiry>
             <Flex col>
               <Tdiv t3 lightPrimary>
                 When connected, ensure that the{' '}
