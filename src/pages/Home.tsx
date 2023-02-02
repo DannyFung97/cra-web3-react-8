@@ -8,8 +8,8 @@ import { Flex } from '../components/atoms/Flex'
 import { Scrollable } from '../components/atoms/Scrollable'
 import { Table, TableBody, TableData, TableFoot, TableHead, TableHeader, TableRow } from '../components/atoms/Table'
 import { Tdiv } from '../components/atoms/Text'
-import { InputSection } from '../components/molecules/InputSection'
-import { BalanceDropdownOptions, DropdownInputSection } from '../components/organisms/Dropdown'
+import { SmallerInputSection } from '../components/molecules/InputSection'
+import { BalanceDropdownOptions, GenericInputSection } from '../components/organisms/Dropdown'
 import { ZERO, Z_TABLE } from '../constants'
 import { TransactionCondition } from '../constants/enums'
 import { ReadToken } from '../constants/types'
@@ -121,11 +121,26 @@ export function Home(): JSX.Element {
             create failed toast
           </Button>
           <Button onClick={toggleTheme}>toggle theme</Button>
-          <Button onClick={() => setOpenAccordion(!openAccordion)}>Open Accordion</Button>
         </Flex>
         <HorizontalSeparator widthP={100} />
         <Flex gap={10} widthP={100}>
-          <Scrollable style={{ padding: '0 10px 0 10px' }} maxDesktopHeight={'30vh'}>
+          <Flex col gap={4} p={5}>
+            <Tdiv primary>primary</Tdiv>
+            <Tdiv secondary>secondary</Tdiv>
+            <Tdiv tertiary>tertiary</Tdiv>
+            <Tdiv lightPrimary>lightPrimary</Tdiv>
+            <Tdiv lightSecondary>lightSecondary</Tdiv>
+            <Tdiv lightTertiary>lightTertiary</Tdiv>
+            <Tdiv darkPrimary>darkPrimary</Tdiv>
+            <Tdiv darkSecondary>darkSecondary</Tdiv>
+            <Tdiv darkTertiary>darkTertiary</Tdiv>
+            <Tdiv info>info</Tdiv>
+            <Tdiv success>success</Tdiv>
+            <Tdiv warning>warning</Tdiv>
+            <Tdiv error>error</Tdiv>
+            <Tdiv inquiry>inquiry</Tdiv>
+          </Flex>
+          <Scrollable px={10} py={0} maxDesktopHeight={'30vh'}>
             <Table textAlign="center" style={{ borderSpacing: '0px 7px' }}>
               <TableHead sticky zIndex={Z_TABLE + 1}>
                 <TableHeader>A</TableHeader>
@@ -166,99 +181,76 @@ export function Home(): JSX.Element {
               </TableFoot>
             </Table>
           </Scrollable>
-          <Accordion isOpen={openAccordion} customHeight={'30vh'}>
-            <Flex col p={10} gap={10}>
-              <Card>
-                <Tdiv>I am inside the accordion</Tdiv>
-              </Card>
-              <Card>
-                <Tdiv>I am inside the accordion</Tdiv>
-              </Card>
-              <Card>
-                <Tdiv>I am inside the accordion</Tdiv>
-              </Card>
-              <Card>
-                <Tdiv>I am inside the accordion</Tdiv>
-              </Card>
-              <Card>
-                <Tdiv>I am inside the accordion</Tdiv>
-              </Card>
-              <Card>
-                <Tdiv>I am inside the accordion</Tdiv>
-              </Card>
-              <Card>
-                <Tdiv>I am inside the accordion</Tdiv>
-              </Card>
-              <Card>
-                <Tdiv>I am inside the accordion</Tdiv>
-              </Card>
-              <Card>
-                <Tdiv>I am inside the accordion</Tdiv>
-              </Card>
-              <Card>
-                <Tdiv>I am inside the accordion</Tdiv>
-              </Card>
-              <Card>
-                <Tdiv>I am inside the accordion</Tdiv>
-              </Card>
-            </Flex>
-          </Accordion>
-          <Flex col gap={4}>
-            <InputSection value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
-            <InputSection value={inputValue} onChange={(e) => setInputValue(e.target.value)} buttonText={'Max'} />
-            <InputSection
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              icon={<>(Icon)</>}
-              text={'text'}
-            />
-            <InputSection
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              buttonText={'Max'}
-              icon={<>(Icon)</>}
-              text={'text'}
-            />
-            <InputSection
-              displayIconOnMobile={false}
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              buttonText={'Max'}
-              icon={<>(Icon)</>}
-              text={'text'}
-              buttonDisabled
-            />
-            <InputSection
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              buttonText={'Max'}
-              icon={<>(Icon)</>}
-              text={'text'}
-              buttonDisabled
-              disabled
-            />
+          <Flex col>
+            <Button inquiry onClick={() => setOpenAccordion(!openAccordion)}>
+              Test Accordion
+            </Button>
+            <Accordion isOpen={openAccordion} customHeight={'30vh'}>
+              <Flex col p={10} gap={10}>
+                <Card>
+                  <Tdiv>I am inside the accordion</Tdiv>
+                </Card>
+                <Card>
+                  <Tdiv>I am inside the accordion</Tdiv>
+                </Card>
+                <Card>
+                  <Tdiv>I am inside the accordion</Tdiv>
+                </Card>
+                <Card>
+                  <Tdiv>I am inside the accordion</Tdiv>
+                </Card>
+                <Card>
+                  <Tdiv>I am inside the accordion</Tdiv>
+                </Card>
+                <Card>
+                  <Tdiv>I am inside the accordion</Tdiv>
+                </Card>
+                <Card>
+                  <Tdiv>I am inside the accordion</Tdiv>
+                </Card>
+                <Card>
+                  <Tdiv>I am inside the accordion</Tdiv>
+                </Card>
+                <Card>
+                  <Tdiv>I am inside the accordion</Tdiv>
+                </Card>
+                <Card>
+                  <Tdiv>I am inside the accordion</Tdiv>
+                </Card>
+                <Card>
+                  <Tdiv>I am inside the accordion</Tdiv>
+                </Card>
+              </Flex>
+            </Accordion>
           </Flex>
           <Flex col gap={4}>
-            <DropdownInputSection
+            <GenericInputSection
+              nohover
+              isOpen={d1}
+              placeholder={'$'}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+            <GenericInputSection
               nohover
               isOpen={d1}
               placeholder={'$'}
               frontIcon={<>Test</>}
-              frontButtonText={'Fixed Coin'}
+              frontButtonText={'Fixed'}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
             />
-            <DropdownInputSection
+            <GenericInputSection
               displayIconOnMobile={false}
               nohover
               isOpen={d1}
               placeholder={'$'}
               frontIcon={<>Test</>}
-              frontButtonText={'Fixed Coin'}
+              frontButtonText={'Fixed'}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
             />
-            <DropdownInputSection
+            <GenericInputSection
               hasArrow
               isOpen={d1}
               placeholder={'$'}
@@ -268,7 +260,7 @@ export function Home(): JSX.Element {
               onChange={(e) => setInputValue(e.target.value)}
               onClickFront={() => setD1(!d1)}
             />
-            <DropdownInputSection
+            <GenericInputSection
               hasArrow
               isOpen={d1}
               placeholder={'$'}
@@ -279,6 +271,28 @@ export function Home(): JSX.Element {
               onChange={(e) => setInputValue(e.target.value)}
               onClickFront={() => setD1(!d1)}
               onClickBack={() => console.log('max')}
+            />
+            <GenericInputSection
+              hasArrow
+              isOpen={d1}
+              placeholder={'$'}
+              backButtonText={'Max Value'}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onClickBack={() => console.log('max')}
+            />
+            <GenericInputSection
+              hasArrow
+              isOpen={d1}
+              placeholder={'$'}
+              frontIcon={<>Test</>}
+              frontButtonText={selectedD1?.symbol ?? 'Select a coin'}
+              backButtonText={'Max Value'}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onClickFront={() => setD1(!d1)}
+              onClickBack={() => console.log('max')}
+              backButtonDisabled
             />
             <BalanceDropdownOptions
               isOpen={d1}
@@ -291,6 +305,9 @@ export function Home(): JSX.Element {
                 setD1(false)
               }}
             />
+          </Flex>
+          <Flex col gap={4}>
+            <SmallerInputSection placeholder="Search" value={d1Input} onChange={(e) => setD1Input(e.target.value)} />
           </Flex>
         </Flex>
       </Flex>

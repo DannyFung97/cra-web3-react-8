@@ -21,7 +21,7 @@ export const WalletList = () => {
 
   return (
     <>
-      <div style={{ margin: 'auto' }}>
+      <Flex col style={{ margin: 'auto' }} gap={10}>
         <Card
           px={30}
           py={5}
@@ -51,7 +51,7 @@ export const WalletList = () => {
             </Flex>
           </Card>
         ))}
-      </div>
+      </Flex>
     </>
   )
 }

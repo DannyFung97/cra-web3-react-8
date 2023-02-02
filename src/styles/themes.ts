@@ -105,7 +105,7 @@ export const lightTheme = {
   backgroundScrim: opacify(60, colors.gray900),
   backgroundOutline: colors.gray150,
 
-  textPrimary: colors.gray900,
+  textPrimary: opacify(80, colors.gray900),
   textSecondary: colors.gray400,
   textTertiary: colors.gray300,
 
@@ -133,11 +133,11 @@ export const lightTheme = {
 
   accentTextDarkPrimary: opacify(80, colors.gray900),
   accentTextDarkSecondary: opacify(60, colors.gray900),
-  accentTextDarkTertiary: opacify(24, colors.gray900),
+  accentTextDarkTertiary: colors.gray300,
 
   accentTextLightPrimary: colors.gray50,
-  accentTextLightSecondary: opacify(72, colors.gray50),
-  accentTextLightTertiary: opacify(12, colors.gray50),
+  accentTextLightSecondary: colors.gray100,
+  accentTextLightTertiary: colors.gray150,
 }
 
 export const darkTheme = {
@@ -149,8 +149,8 @@ export const darkTheme = {
   backgroundScrim: opacify(72, colors.gray900),
   backgroundOutline: colors.gray850,
 
-  textPrimary: colors.white,
-  textSecondary: colors.gray300,
+  textPrimary: colors.gray50,
+  textSecondary: opacify(72, colors.gray50),
   textTertiary: colors.gray500,
 
   accentAction: colors.blue400,

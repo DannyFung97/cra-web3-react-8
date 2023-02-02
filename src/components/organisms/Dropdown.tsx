@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Accordion } from '../atoms/Accordion'
 import { Button, ButtonAppearance } from '../atoms/Button'
-import { InputSectionWrapper, StyledInput } from '../atoms/Input'
+import { InputSectionWrapper, StyledGenericIconAndText, StyledInput } from '../atoms/Input'
 import { Flex } from '../atoms/Flex'
 import { Tdiv } from '../atoms/Text'
 import { useGeneral } from '../../context/GeneralManager'
@@ -12,7 +12,7 @@ import { StyledArrowDropDown } from '../atoms/Icon'
 import { Card } from '../atoms/Card'
 import { useWindowDimensions } from '../../hooks/internal/useWindowDimensions'
 
-export const DropdownInputSection = ({
+export const GenericInputSection = ({
   hasArrow,
   frontIcon,
   frontButtonText,
@@ -69,37 +69,45 @@ export const DropdownInputSection = ({
   return (
     <InputSectionWrapper style={rawStyle}>
       {(((frontIcon || frontButtonText) && isMobile && displayIconOnMobile) ||
-        ((frontIcon || frontButtonText) && !isMobile)) && (
-        <Button
-          nohover={nohover}
-          inquiry
-          widthP={100}
-          style={{
-            justifyContent: 'center',
-            height: '50px',
-            borderTopRightRadius: '0px',
-            borderBottomRightRadius: '0px',
-          }}
-          onClick={onClickFront ?? undefined}
-          disabled={frontButtonDisabled}
-        >
-          <Flex center gap={4}>
-            {frontIcon && (
-              <Tdiv autoAlignVertical lightPrimary>
-                {frontIcon}
-              </Tdiv>
-            )}
-            {frontButtonText && (
-              <Tdiv lightPrimary t4 {...gradientStyle}>
-                {frontButtonText}
-              </Tdiv>
-            )}
-            {hasArrow && (
-              <StyledArrowDropDown style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} size={18} />
-            )}
-          </Flex>
-        </Button>
-      )}
+        ((frontIcon || frontButtonText) && !isMobile)) &&
+        (onClickFront ? (
+          <Button
+            nohover={nohover}
+            inquiry
+            widthP={100}
+            style={{
+              justifyContent: 'center',
+              height: '50px',
+              borderTopRightRadius: '0px',
+              borderBottomRightRadius: '0px',
+            }}
+            onClick={onClickFront ?? undefined}
+            disabled={frontButtonDisabled}
+          >
+            <Flex center gap={4}>
+              {frontIcon && (
+                <Tdiv autoAlignVertical lightPrimary>
+                  {frontIcon}
+                </Tdiv>
+              )}
+              {frontButtonText && (
+                <Tdiv lightPrimary t4 {...gradientStyle}>
+                  {frontButtonText}
+                </Tdiv>
+              )}
+              {hasArrow && (
+                <StyledArrowDropDown style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} size={18} />
+              )}
+            </Flex>
+          </Button>
+        ) : (
+          <StyledGenericIconAndText>
+            {frontIcon}
+            <Tdiv t5 secondary>
+              {frontButtonText}
+            </Tdiv>
+          </StyledGenericIconAndText>
+        ))}
       <StyledInput
         type="text"
         placeholder={placeholder ?? '0'}
@@ -112,8 +120,18 @@ export const DropdownInputSection = ({
           width: inputWidth ?? '100%',
           outline: 'none',
           border: 'inherit',
-          borderTopLeftRadius: isMobile && !displayIconOnMobile ? '10px' : '0px',
-          borderBottomLeftRadius: isMobile && !displayIconOnMobile ? '10px' : '0px',
+          borderTopLeftRadius:
+            isMobile && !displayIconOnMobile
+              ? '10px'
+              : frontIcon || frontButtonText || onClickFront
+              ? '0px'
+              : 'inherit',
+          borderBottomLeftRadius:
+            isMobile && !displayIconOnMobile
+              ? '10px'
+              : frontIcon || frontButtonText || onClickFront
+              ? '0px'
+              : 'inherit',
           borderTopRightRadius: onClickBack ? '0px' : 'inherit',
           borderBottomRightRadius: onClickBack ? '0px' : 'inherit',
           fontSize: 'inherit',

@@ -104,18 +104,20 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
       <Modal handleClose={closeModal} isOpen={networkModal} modalTitle={'Connect to a network'} zIndex={Z_MODAL + 1}>
         <Flex col gap={10}>
           <Card info>
-            <Tdiv t3 lightPrimary>
-              When connected, ensure that the{' '}
-            </Tdiv>
-            <Tdiv t3 lightPrimary>
-              network on your wallet matches{' '}
-            </Tdiv>
-            <Tdiv t3 lightPrimary>
-              the network on this app.{' '}
-            </Tdiv>
+            <Flex col>
+              <Tdiv t3 lightPrimary>
+                When connected, ensure that the{' '}
+              </Tdiv>
+              <Tdiv t3 lightPrimary>
+                network on your wallet matches{' '}
+              </Tdiv>
+              <Tdiv t3 lightPrimary>
+                the network on this app.{' '}
+              </Tdiv>
+            </Flex>
           </Card>
           <Flex justifyCenter gap={10}>
-            <Tdiv t3 darkPrimary>
+            <Tdiv t3 primary>
               Show Test Networks
             </Tdiv>
             <ToggleSwitch
@@ -125,19 +127,19 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
             />
           </Flex>
           <Scrollable maxMobileHeight={'60vh'}>
-            <div>
+            <Flex col style={{ margin: 'auto' }} gap={10}>
               {adjustedNetworks.map((network: Network) => (
-                <div key={network.name} onClick={() => changeNetwork(network.chainId)} style={{ display: 'flex' }}>
-                  <div>
+                <Card key={network.name} onClick={() => changeNetwork(network.chainId)} style={{ display: 'flex' }}>
+                  <Flex stretch between>
                     <ModalCell>
-                      <Tdiv t3 darkPrimary>
+                      <Tdiv t3 primary>
                         {network.name}
                       </Tdiv>
                     </ModalCell>
-                  </div>
-                </div>
+                  </Flex>
+                </Card>
               ))}
-            </div>
+            </Flex>
           </Scrollable>
         </Flex>
       </Modal>

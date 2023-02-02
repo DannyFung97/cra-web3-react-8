@@ -3,9 +3,17 @@ import { GeneralTextProps, GeneralTextCss } from '../Text'
 import { Slider } from '@rebass/forms'
 import { BKPT_5 } from '../../../constants'
 import { Text4Css } from '../Text/fonts'
+import { Theme } from '../../../styles/themes'
 
 export const StyledInput = styled.input`
   padding: 10px 20px;
+  transition: all 0.2s ease-in-out;
+
+  &:focus,
+  &:hover {
+    border-color: ${({ theme }: { theme: Theme }) => theme.backgroundInteractive} !important;
+    filter: brightness(120%);
+  }
 `
 
 export const StyledGenericIconAndText = styled.div<{ disabled?: boolean; width?: number }>`

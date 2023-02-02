@@ -102,7 +102,7 @@ const AlignAutoCss = css`
 `
 
 export const TextStyleCss = css<TextStyleProps>`
-  ${(props) => props.theme && `color: ${props.theme.textPrimary};`}
+  color: ${(props) => props.theme.textPrimary};
   ${(props) => props.primary && `color: ${props.theme.textPrimary};`}
   ${(props) => props.secondary && `color: ${props.theme.textSecondary};`}
   ${(props) => props.tertiary && `color: ${props.theme.textTertiary};`}
@@ -120,7 +120,7 @@ export const TextStyleCss = css<TextStyleProps>`
   ${(props) => props.info && `color: ${props.theme.accentAction};`}
   ${(props) => props.success && `color: ${props.theme.accentSuccess};`}
   ${(props) => props.warning && `color: ${props.theme.accentWarning};`}
-  ${(props) => props.error && `color: ${props.theme.accentError};`}
+  ${(props) => props.error && `color: ${props.theme.accentFailure};`}
   ${(props) => props.inquiry && `color: ${props.theme.accentInquiry};`}
 
   ${(props) => props.autoAlign && AlignAutoCss}

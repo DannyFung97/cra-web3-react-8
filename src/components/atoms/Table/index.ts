@@ -66,7 +66,7 @@ export const TableHead = styled.thead<TableHeadProps>`
     background-color: ${props.theme.background};
     z-index: ${props.zIndex ? props.zIndex : `${Z_TABLE}`};
     th {
-      padding-top: 20px;
+      padding-top: 10px;
     }
   `};
 `
@@ -81,7 +81,7 @@ export const TableFoot = styled.tfoot<TableHeadProps>`
     background-color: ${props.theme.background};
     z-index: ${props.zIndex ? props.zIndex : `${Z_TABLE}`};
     th {
-      padding-bottom: 20px;
+      padding-bottom: 10px;
     }
   `};
 `

@@ -72,14 +72,16 @@ export const WalletModal: React.FC<WalletModalProps> = ({ closeModal, isOpen }) 
 
   return (
     <Modal handleClose={handleClose} isOpen={isOpen} modalTitle={'Connect a Wallet'} zIndex={Z_MODAL + 1}>
-      <Scrollable maxMobileHeight={'60vh'}>
-        <WalletList />
-      </Scrollable>
-      {account && (
-        <Flex justifyCenter>
-          <Button onClick={disconnect}>Disconnect Wallet</Button>
-        </Flex>
-      )}
+      <Flex col gap={10}>
+        <Scrollable maxMobileHeight={'60vh'}>
+          <WalletList />
+        </Scrollable>
+        {account && (
+          <Flex justifyCenter>
+            <Button onClick={disconnect}>Disconnect Wallet</Button>
+          </Flex>
+        )}
+      </Flex>
     </Modal>
   )
 }

@@ -27,7 +27,7 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
     if (props.info) bgColor = `${theme.accentActionSoft}`
     if (props.success) bgColor = `${theme.accentSuccessSoft}`
     if (props.warning) bgColor = `${theme.accentWarningSoft}`
-    if (props.error) bgColor = `${theme.accentErrorSoft}`
+    if (props.error) bgColor = `${theme.accentFailureSoft}`
     if (props.inquiry) bgColor = `${theme.accentInquirySoft}`
     if (props.white) {
       textColor = `${theme.accentTextDarkSecondary}`
