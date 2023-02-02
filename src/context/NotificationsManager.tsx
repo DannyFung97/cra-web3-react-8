@@ -8,10 +8,11 @@ import React, {
   useRef,
   useCallback,
 } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer, toast, Theme } from 'react-toastify'
 
 // import 'animate.css/animate.min.css'
 import 'react-toastify/dist/ReactToastify.css'
+import '../styles/toast.css'
 import { TransactionCondition, Error } from '../constants/enums'
 
 import { AppToast, TransactionToast } from '../components/molecules/Toast'
@@ -28,7 +29,14 @@ if an error occurs.
 */
 
 type ToastSystemContextType = {
-  makeTxToast: (txType: string, condition: TransactionCondition, txHash?: string, errObj?: any) => void
+  makeTxToast: (
+    txType: string,
+    condition: TransactionCondition,
+    theme: 'light' | 'dark',
+    toastId?: string,
+    txHash?: string,
+    errObj?: any
+  ) => void
   makeAppToast: (parsedData: ErrorData, id: Error, appToast: JSX.Element, toastConfig: any) => void
   addErrors: (errorsToAdd: ErrorData[]) => void
   removeErrors: (errorToRemove: Error[]) => void
@@ -66,7 +74,19 @@ export function ToastsProvider(props: PropsWithChildren): JSX.Element {
     position: toast.POSITION.BOTTOM_RIGHT,
     closeOnClick: false,
     closeButton: true,
-    theme: appTheme,
+    // theme: 'colored' as Theme,
+    className: 'success-toast',
+    isLoading: false,
+  }
+
+  const txWarn = {
+    autoClose: 10000,
+    type: toast.TYPE.WARNING,
+    position: toast.POSITION.BOTTOM_RIGHT,
+    closeOnClick: false,
+    closeButton: true,
+    // theme: 'colored' as Theme,
+    className: 'warn-toast',
     isLoading: false,
   }
 
@@ -76,27 +96,30 @@ export function ToastsProvider(props: PropsWithChildren): JSX.Element {
     position: toast.POSITION.BOTTOM_RIGHT,
     closeOnClick: false,
     closeButton: true,
-    theme: appTheme,
+    // theme: 'colored' as Theme,
+    className: 'error-toast',
     isLoading: false,
   }
 
-  const appNotice: any = {
+  const appNotice = {
     type: toast.TYPE.INFO,
     position: toast.POSITION.BOTTOM_RIGHT,
     autoClose: false,
     closeOnClick: false,
     closeButton: true,
-    theme: appTheme,
+    // theme: 'colored' as Theme,
+    className: 'info-toast',
     isLoading: false,
   }
 
-  const appError: any = {
+  const appError = {
     type: toast.TYPE.ERROR,
     position: toast.POSITION.BOTTOM_RIGHT,
     autoClose: false,
     closeOnClick: false,
     closeButton: true,
-    theme: appTheme,
+    // theme: 'colored' as Theme,
+    className: 'error-toast',
     isLoading: false,
   }
 
@@ -122,50 +145,73 @@ export function ToastsProvider(props: PropsWithChildren): JSX.Element {
   }, [])
 
   const makeTxToast = useCallback(
-    (txType: string, condition: TransactionCondition, txHash?: string, errObj?: any) => {
+    (
+      txType: string,
+      condition: TransactionCondition,
+      theme: 'light' | 'dark',
+      toastId?: string,
+      txHash?: string,
+      errObj?: any
+    ) => {
       const _toast = <TransactionToast txType={txType} condition={condition} txHash={txHash} errObj={errObj} />
+      console.log(appTheme)
       switch (condition) {
         case 'Complete':
-          if (txHash) {
-            console.log(txHash, toast.isActive(txHash))
-            if (toast.isActive(txHash)) {
-              toast.update(txHash, {
+          if (toastId) {
+            if (toast.isActive(toastId)) {
+              toast.update(toastId, {
                 render: _toast,
                 ...txSuccess,
               })
             } else {
               toast(_toast, {
-                toastId: txHash,
+                toastId,
                 ...txSuccess,
               })
             }
           }
           break
         case 'Incomplete':
-          if (txHash) {
-            if (toast.isActive(txHash)) {
-              toast.update(txHash, {
+          if (toastId) {
+            if (toast.isActive(toastId)) {
+              toast.update(toastId, {
                 render: _toast,
                 ...txError,
               })
             } else {
               toast(_toast, {
-                toastId: txHash,
+                toastId,
                 ...txError,
               })
             }
           }
           break
+        case 'Cancelled':
+          if (toastId) {
+            if (toast.isActive(toastId)) {
+              toast.update(toastId, {
+                render: _toast,
+                ...txWarn,
+              })
+            } else {
+              toast(_toast, {
+                toastId,
+                ...txWarn,
+              })
+            }
+          }
+          break
         case 'Pending':
-          if (txHash) {
-            toast.loading(<button>hey</button>, {
-              toastId: txHash,
+          if (toastId) {
+            toast.loading(_toast, {
+              toastId,
               type: toast.TYPE.INFO,
               autoClose: false,
               position: toast.POSITION.BOTTOM_RIGHT,
               closeOnClick: false,
               closeButton: true,
-              theme: appTheme,
+              className: 'info-toast',
+              // theme: 'colored' as Theme,
             })
           }
           break
@@ -175,7 +221,7 @@ export function ToastsProvider(props: PropsWithChildren): JSX.Element {
           })
       }
     },
-    [appTheme]
+    []
   )
 
   const makeAppToast = useCallback(

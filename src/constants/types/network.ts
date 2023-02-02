@@ -1,3 +1,5 @@
+import { ContractSources } from '.'
+
 export type Network = {
   name: string
   chainId: number
@@ -13,6 +15,7 @@ export type Network = {
     key: string
     url: string
     apiUrl: string
+    excludedContractAddrs: string[]
   }
   metamaskChain: {
     chainId: string
@@ -24,5 +27,11 @@ export type Network = {
     }
     rpcUrls: string[]
     blockExplorerUrls: string[]
+  }
+  config: {
+    generalContracts: { [key: string]: ContractSources }
+    specialContracts: { [key: string]: ContractSources }
+    generalFeatures: { [key: string]: boolean }
+    specialFeatures: { [key: string]: boolean }
   }
 }

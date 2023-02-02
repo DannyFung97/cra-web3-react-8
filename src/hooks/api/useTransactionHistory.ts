@@ -1,0 +1,43 @@
+import { fetchExplorerTxHistoryByAddress } from '../../utils/explorer'
+import { useState, useEffect, useRef } from 'react'
+import { useWeb3React } from '@web3-react/core'
+import { useCache, useNetwork, useProvider } from '../../context'
+import { useContracts } from '../../context/ContractsManager'
+
+export const useFetchTxHistoryByAddress = (): any => {
+  const { account } = useWeb3React()
+  const { activeNetwork } = useNetwork()
+  const { deleteLocalTransactions } = useCache()
+  const { latestBlock } = useProvider()
+  const [txHistory, setTxHistory] = useState<any>([])
+  const { contractSources } = useContracts()
+  const running = useRef(false)
+
+  const fetchTxHistoryByAddress = async (account: string) => {
+    running.current = true
+    try {
+      await fetchExplorerTxHistoryByAddress(activeNetwork, account)
+        .then((result) => {
+          if (result.status == '1') {
+            const contractAddrs = contractSources.map((contract) => contract.addr)
+            const txList: any[] = result.result.filter((tx: any) => contractAddrs.includes(tx.to.toLowerCase()))
+            deleteLocalTransactions(txList)
+            setTxHistory(txList.slice(0, 30))
+          } else {
+            setTxHistory([])
+          }
+        })
+        .catch((err) => console.log('useFetchTxHistoryByAddress', err))
+    } catch (err) {
+      console.log('useFetchTxHistoryByAddress try block', err)
+    }
+    running.current = false
+  }
+
+  useEffect(() => {
+    if (!latestBlock.blockNumber || !account || running.current) return
+    fetchTxHistoryByAddress(account)
+  }, [latestBlock.blockNumber, account])
+
+  return txHistory
+}

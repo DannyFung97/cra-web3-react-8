@@ -18,6 +18,7 @@ export const GoerliNetwork: Network = {
     key: '',
     url: 'https://etherscan.io',
     apiUrl: 'https://api.etherscan.io',
+    excludedContractAddrs: [],
   },
   metamaskChain: {
     chainId: hexValue(chainId),
@@ -25,5 +26,11 @@ export const GoerliNetwork: Network = {
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://mainnet.infura.io/v3/'],
     blockExplorerUrls: ['https://etherscan.io'],
+  },
+  config: {
+    generalContracts: {},
+    specialContracts: {},
+    generalFeatures: {},
+    specialFeatures: {},
   },
 }

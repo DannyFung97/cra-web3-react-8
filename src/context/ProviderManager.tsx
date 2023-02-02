@@ -12,6 +12,10 @@ import { BlockData, GasData, Network } from '../constants/types'
 import { Scrollable } from '../components/atoms/Scrollable'
 import { NETWORKS, RPC_PROVIDERS } from '../constants/networks'
 import { useFetchGasData } from '../hooks/provider/useGas'
+import { Tdiv } from '../components/atoms/Text'
+import { Flex } from '../components/atoms/Flex'
+import { Card } from '../components/atoms/Card'
+import { Z_MODAL } from '../constants'
 
 /*
 
@@ -97,37 +101,45 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
 
   return (
     <ProviderContext.Provider value={value}>
-      <Modal handleClose={closeModal} isOpen={networkModal}>
-        <div>
-          <h3>When connected, ensure that the </h3>
-          <h3>network on your wallet matches </h3>
-          <h3>the network on this app. </h3>
-        </div>
-        {/* <div>
-          <div>
-            <h3>Show Test Networks</h3>
-          </div>
-          <div>
+      <Modal handleClose={closeModal} isOpen={networkModal} modalTitle={'Connect to a network'} zIndex={Z_MODAL + 1}>
+        <Flex col gap={10}>
+          <Card info>
+            <Tdiv t3 lightPrimary>
+              When connected, ensure that the{' '}
+            </Tdiv>
+            <Tdiv t3 lightPrimary>
+              network on your wallet matches{' '}
+            </Tdiv>
+            <Tdiv t3 lightPrimary>
+              the network on this app.{' '}
+            </Tdiv>
+          </Card>
+          <Flex justifyCenter gap={10}>
+            <Tdiv t3 darkPrimary>
+              Show Test Networks
+            </Tdiv>
             <ToggleSwitch
               id="show-testnets"
               toggled={showTestnets}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setShowTestnets(e.target.checked)}
             />
-          </div>
-        </div> */}
-        <Scrollable maxMobileHeight={'60vh'}>
-          <div>
-            {adjustedNetworks.map((network: Network) => (
-              <div key={network.name} onClick={() => changeNetwork(network.chainId)} style={{ display: 'flex' }}>
-                <div>
-                  <ModalCell>
-                    <h3>{network.name}</h3>
-                  </ModalCell>
+          </Flex>
+          <Scrollable maxMobileHeight={'60vh'}>
+            <div>
+              {adjustedNetworks.map((network: Network) => (
+                <div key={network.name} onClick={() => changeNetwork(network.chainId)} style={{ display: 'flex' }}>
+                  <div>
+                    <ModalCell>
+                      <Tdiv t3 darkPrimary>
+                        {network.name}
+                      </Tdiv>
+                    </ModalCell>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </Scrollable>
+              ))}
+            </div>
+          </Scrollable>
+        </Flex>
       </Modal>
       {props.children}
     </ProviderContext.Provider>

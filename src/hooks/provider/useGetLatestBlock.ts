@@ -12,7 +12,6 @@ export const useGetLatestBlock = (): BlockData => {
   useEffect(() => {
     if (!provider) return
     provider.on('block', async (res: number) => {
-      console.log('block number', res)
       if (running.current) return
       running.current = true
       setBlockNumber(res)

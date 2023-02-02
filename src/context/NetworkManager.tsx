@@ -5,8 +5,7 @@ import { Network } from '../constants/types'
 import { useWeb3React } from '@web3-react/core'
 import { hexStripZeros } from 'ethers/lib/utils'
 import { BigNumber } from 'ethers'
-import { CHAIN_IDS_TO_NETWORKS, NETWORKS, RPC_URLS } from '../constants/networks'
-import { CONNECTION_TYPE_TO_CONNECTION, networkConnection, SUPPORTED_WALLETS, walletConnectConnection } from '../wallet'
+import { NETWORKS } from '../constants/networks'
 
 /*
 
@@ -101,37 +100,6 @@ export function NetworkManager(props: PropsWithChildren): JSX.Element {
     },
     [findNetworkByChainId, library]
   )
-
-  // const changeNetwork = useCallback(
-  //   async (targetChain: number) => {
-  //     try {
-  //       const network = CHAIN_IDS_TO_NETWORKS[targetChain]
-  //       if (connector && network) {
-  //         if (connector === walletConnectConnection.connector || connector === networkConnection.connector) {
-  //           await connector.activate(network.chainId)
-  //         } else {
-  //           const addChainParameter = {
-  //             targetChain,
-  //             chainName: network.name,
-  //             rpcUrls: [RPC_URLS[network.chainId][0]],
-  //             nativeCurrency: network.metamaskChain?.nativeCurrency,
-  //             blockExplorerUrls: network.metamaskChain?.blockExplorerUrls,
-  //           }
-  //           console.log('Adding network to Metamask', addChainParameter)
-  //           await connector.activate(addChainParameter)
-  //         }
-  //         setUnconnectedChainId(undefined)
-  //       } else {
-  //         console.log('No connection or network found')
-  //         setUnconnectedChainId(targetChain)
-  //       }
-  //     } catch (error) {
-  //       console.error('Failed to switch network', error)
-  //       setUnconnectedChainId(targetChain)
-  //     }
-  //   },
-  //   [connector]
-  // )
 
   useEffect(() => {
     if (account) setUnconnectedChainId(undefined)

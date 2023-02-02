@@ -12,13 +12,11 @@ type GeneralContextType = {
   selectedProvider?: string
   pathname: string
   appTheme: 'light' | 'dark'
-  clock: {
-    positiveVersion: number
-    negativeVersion: number
-    minute: number
-    positiveReload: () => void
-    negativeReload: () => void
-  }
+  positiveVersion: number
+  negativeVersion: number
+  minute: number
+  positiveReload: () => void
+  negativeReload: () => void
   setSelectedProvider: (provider?: string) => void
   removeSelectedProvider: () => void
   handlePathNameChange: (pathname: string) => void
@@ -29,13 +27,11 @@ const GeneralContext = createContext<GeneralContextType>({
   selectedProvider: undefined,
   pathname: '/',
   appTheme: 'light',
-  clock: {
-    positiveVersion: 0,
-    negativeVersion: 0,
-    minute: 0,
-    positiveReload: () => undefined,
-    negativeReload: () => undefined,
-  },
+  positiveVersion: 0,
+  negativeVersion: 0,
+  minute: 0,
+  positiveReload: () => undefined,
+  negativeReload: () => undefined,
   setSelectedProvider: () => undefined,
   removeSelectedProvider: () => undefined,
   handlePathNameChange: () => undefined,
@@ -85,13 +81,11 @@ export function GeneralManager(props: PropsWithChildren): JSX.Element {
     () => ({
       selectedProvider,
       pathname,
-      clock: {
-        positiveVersion,
-        negativeVersion,
-        minute,
-        positiveReload,
-        negativeReload,
-      },
+      positiveVersion,
+      negativeVersion,
+      minute,
+      positiveReload,
+      negativeReload,
       appTheme,
       setSelectedProvider,
       removeSelectedProvider,

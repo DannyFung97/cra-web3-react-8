@@ -1,10 +1,11 @@
-import React, { useMemo, useContext, createContext, useEffect, useCallback, PropsWithChildren } from 'react'
+import React, { useMemo, useContext, createContext, useEffect, useCallback, PropsWithChildren, useState } from 'react'
 import { useLocalStorage } from 'react-use-storage'
 import { useWallet } from './WalletManager'
 
 import { LocalTx } from '../constants/types'
 import { useNetwork } from '.'
 import { useWeb3React } from '@web3-react/core'
+import { AccountModal } from '../components/organisms/AccountModal'
 /*
 
 This manager caches data such as the user's pending transactions, policies, token and position data.
@@ -15,12 +16,20 @@ should be called manually, such as when the user sends a transaction.
 
 */
 
-type CachedDataContextType = {
+type CacheContextType = {
+  showAccountModal: boolean
+  openAccountModal: () => void
   localTransactions: LocalTx[]
+  addLocalTransactions: (txToAdd: LocalTx) => void
+  deleteLocalTransactions: (txsToDelete: { hash: string }[]) => void
 }
 
-const CachedDataContext = createContext<CachedDataContextType>({
+const CacheContext = createContext<CacheContextType>({
+  showAccountModal: false,
+  openAccountModal: () => undefined,
   localTransactions: [],
+  addLocalTransactions: () => undefined,
+  deleteLocalTransactions: () => undefined,
 })
 
 export function CacheManager(props: PropsWithChildren): JSX.Element {
@@ -28,6 +37,17 @@ export function CacheManager(props: PropsWithChildren): JSX.Element {
   const { disconnect } = useWallet()
   const { activeNetwork } = useNetwork()
   const [localTxs, setLocalTxs] = useLocalStorage<LocalTx[]>('new_loc_txs', [])
+  const [accountModal, setAccountModal] = useState<boolean>(false)
+
+  const openModal = useCallback(() => {
+    document.body.style.overflowY = 'hidden'
+    setAccountModal(true)
+  }, [])
+
+  const closeModal = useCallback(() => {
+    document.body.style.overflowY = 'scroll'
+    setAccountModal(false)
+  }, [])
 
   const addLocalTransactions = useCallback(
     (txToAdd: LocalTx) => {
@@ -55,8 +75,10 @@ export function CacheManager(props: PropsWithChildren): JSX.Element {
     clearLocalTransactions()
   }, [disconnect, account, activeNetwork.chainId])
 
-  const value = useMemo<CachedDataContextType>(
+  const value = useMemo<CacheContextType>(
     () => ({
+      showAccountModal: accountModal,
+      openAccountModal: openModal,
       localTransactions: localTxs,
       addLocalTransactions,
       deleteLocalTransactions,
@@ -64,9 +86,14 @@ export function CacheManager(props: PropsWithChildren): JSX.Element {
     [localTxs, addLocalTransactions, deleteLocalTransactions]
   )
 
-  return <CachedDataContext.Provider value={value}>{props.children}</CachedDataContext.Provider>
+  return (
+    <CacheContext.Provider value={value}>
+      <AccountModal closeModal={closeModal} isOpen={accountModal} />
+      {props.children}
+    </CacheContext.Provider>
+  )
 }
 
-export function useCachedData(): CachedDataContextType {
-  return useContext(CachedDataContext)
+export function useCache(): CacheContextType {
+  return useContext(CacheContext)
 }

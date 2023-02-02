@@ -18,20 +18,23 @@
 import React, { useCallback, useEffect } from 'react'
 
 /* import managers */
-import { useWallet } from '../../../context'
+import { useWallet } from '../../context'
 
 /* import components */
-import { Modal } from '../../molecules/Modal'
+import { Modal } from '../molecules/Modal'
 // import { Button, ButtonWrapper } from '../../atoms/Button'
-import { Scrollable } from '../../atoms/Scrollable'
+import { Scrollable } from '../atoms/Scrollable'
 
 /* import constants */
 // import { Z_MODAL } from '../../../constants'
 
 /* import wallets */
-import { WalletList } from '../../molecules/WalletList'
+import { WalletList } from '../molecules/WalletList'
 import { useWeb3React } from '@web3-react/core'
-import usePrevious from '../../../hooks/internal/usePrevious'
+import usePrevious from '../../hooks/internal/usePrevious'
+import { Button } from '../atoms/Button'
+import { Flex } from '../atoms/Flex'
+import { Z_MODAL } from '../../constants'
 
 interface WalletModalProps {
   closeModal: () => void
@@ -68,14 +71,14 @@ export const WalletModal: React.FC<WalletModalProps> = ({ closeModal, isOpen }) 
   }, [isActive, activePrevious, handleClose, connector, connectorPrevious])
 
   return (
-    <Modal handleClose={handleClose} isOpen={isOpen}>
+    <Modal handleClose={handleClose} isOpen={isOpen} modalTitle={'Connect a Wallet'} zIndex={Z_MODAL + 1}>
       <Scrollable maxMobileHeight={'60vh'}>
         <WalletList />
       </Scrollable>
       {account && (
-        <div>
-          <button onClick={disconnect}>Disconnect Wallet</button>
-        </div>
+        <Flex justifyCenter>
+          <Button onClick={disconnect}>Disconnect Wallet</Button>
+        </Flex>
       )}
     </Modal>
   )

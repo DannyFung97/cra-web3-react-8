@@ -12,7 +12,7 @@ import { StaticJsonRpcProvider, JsonRpcProvider } from '@ethersproject/providers
 
 export const useFetchGasData = (provider: JsonRpcProvider | StaticJsonRpcProvider): GasData | undefined => {
   const { activeNetwork } = useNetwork()
-  const { clock } = useGeneral()
+  const { minute } = useGeneral()
   const running = useRef(false)
   const [gasData, setGasData] = useState<GasData | undefined>(undefined)
 
@@ -50,7 +50,7 @@ export const useFetchGasData = (provider: JsonRpcProvider | StaticJsonRpcProvide
     if (running.current) return
 
     fetchGasData()
-  }, [activeNetwork, clock.minute, provider])
+  }, [activeNetwork, minute, provider])
 
   return gasData
 }

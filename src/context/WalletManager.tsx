@@ -2,7 +2,7 @@ import React, { createContext, PropsWithChildren, useContext, useMemo, useRef, u
 import { useEagerConnect, useInactiveListener } from '../hooks/wallet/useEagerlyConnect'
 import { useWalletHandler } from '../hooks/wallet/useWalletHandler'
 import { useWalletModal } from '../hooks/wallet/useWalletModal'
-import { WalletModal } from '../components/organisms/wallet/WalletModal'
+import { WalletModal } from '../components/organisms/WalletModal'
 import { useGeneral } from './GeneralManager'
 import { Connection } from '../wallet'
 

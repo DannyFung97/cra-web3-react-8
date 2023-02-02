@@ -10,6 +10,7 @@ export type ReadToken = {
   name: string
   symbol: string
   decimals: number
+  stablecoin?: boolean
 }
 
 export type TokenInfo = ReadToken & {

@@ -177,26 +177,9 @@ export const filterAmount = (input: string, amount: string): string => {
 export const formatAmount = (amount: string): string =>
   amount == '0.' || amount == '.' || amount == '' ? '0.0' : amount
 
-// truncate strings, mostly addresses
-export const shortenAddress = (input: string): string =>
-  `${input.substring(0, 6)}...${input.substring(input.length - 4, input.length)}`
-
 export const capitalizeFirstLetter = (str: string): string => {
   if (str.length == 0) return str
   return str.charAt(0).toUpperCase().concat(str.slice(1))
-}
-
-export function encodeAddresses(addresses: string[]): string {
-  let encoded = '0x'
-  for (let i = 0; i < addresses.length; i++) {
-    const address = addresses[i]
-    if (address.length != 42 || address.substring(0, 2) != '0x') {
-      throw new Error(`invalid address: ${address}`)
-    }
-    // 20 byte encoding of the address
-    encoded += address.slice(2).toLowerCase()
-  }
-  return encoded
 }
 
 export const trim0x = (address: string): string =>
@@ -260,4 +243,8 @@ export function formatCurrency(params: any) {
     return str
   }
   return f
+}
+
+export const equalsIgnoreCase = (baseString: string, compareString: string): boolean => {
+  return baseString.toUpperCase() === compareString.toUpperCase()
 }

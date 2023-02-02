@@ -27,18 +27,14 @@ import { ExplorerscanApi } from '../../constants/enums'
 import { TransactionCondition } from '../../constants/enums'
 
 /* import components */
-// import { Loader } from '../atoms/Loader'
-// import { HyperLink } from '../atoms/Link'
-// import { Button } from '../atoms/Button'
-import { FlexedToastMessage } from '../atoms/Message'
-// import { StyledCheckmark, StyledWarning } from '../atoms/Icon'
-// import { Text, TextSpan } from '../atoms/Typography'
+import { Button } from '../atoms/Button'
+import { Flex } from '../atoms/Flex'
+import { Tdiv } from '../atoms/Text'
+import { CopyButton } from './CopyButton'
+import { HyperLink } from '../atoms/Link'
 
 /* import utils */
 import { getExplorerItemUrl } from '../../utils/explorer'
-
-/* import resources */
-// import { CopyButton } from './CopyButton'
 
 interface AppToastProps {
   message: string
@@ -54,9 +50,9 @@ interface TransactionToastProps {
 
 export const AppToast: React.FC<AppToastProps> = ({ message }) => {
   return (
-    <div style={{ textAlign: 'center' }}>
-      <FlexedToastMessage>{message}</FlexedToastMessage>
-    </div>
+    <Flex itemsCenter marginAuto>
+      <Tdiv lightPrimary>{message}</Tdiv>
+    </Flex>
   )
 }
 
@@ -77,25 +73,32 @@ export const TransactionToast: React.FC<TransactionToastProps> = ({ txType, cond
   const getStateFromCondition = (condition: TransactionCondition): string => {
     switch (condition) {
       case TransactionCondition.SUCCESS:
-        return 'successful'
+        return 'Successful'
       case TransactionCondition.FAILURE:
-        return 'failed'
+        return 'Failed'
       case TransactionCondition.PENDING:
-        return 'pending'
+        return 'Pending'
       case TransactionCondition.CANCELLED:
       default:
-        return 'cancelled'
+        return 'Cancelled'
     }
   }
 
   return (
-    <div style={{ textAlign: 'center' }}>
-      <FlexedToastMessage>
-        {txType}: Transaction {getStateFromCondition(condition)}
-      </FlexedToastMessage>
+    <Flex col gap={10}>
+      <Flex itemsCenter marginAuto>
+        <Tdiv lightPrimary>
+          {txType}: {getStateFromCondition(condition)}
+        </Tdiv>
+      </Flex>
+      {condition == TransactionCondition.CANCELLED && (
+        <Flex>
+          <Tdiv lightPrimary>The transaction could not reach the blockchain due to an issue on this website.</Tdiv>
+        </Flex>
+      )}
       {errObj && (
-        <FlexedToastMessage>
-          <h4>
+        <Flex>
+          <Tdiv t4 lightPrimary>
             {errObj.message && errObj.code ? (
               <>
                 <span>({errObj.code})</span>{' '}
@@ -104,40 +107,35 @@ export const TransactionToast: React.FC<TransactionToastProps> = ({ txType, cond
             ) : (
               'Unknown error, please check full error log'
             )}
-          </h4>
-        </FlexedToastMessage>
+          </Tdiv>
+        </Flex>
       )}
-      <FlexedToastMessage>
-        {/* {txHash && (
-          <HyperLink
-            href={getExplorerItemUrl(activeNetwork.explorer.url, txHash, ExplorerscanApi.TX)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <button>Check on {activeNetwork.explorer.name}</button>
-          </HyperLink>
-        )} */}
-        {/* {errObj && (
-          <CopyButton
-            light
-            toCopy={
-              errObj.message && errObj.code && errObj.data
-                ? JSON.stringify({ code: errObj.code, message: errObj.message, data: errObj.data })
-                : errObj.message && errObj.code
-                ? JSON.stringify({ code: errObj.code, message: errObj.message })
-                : JSON.stringify(errObj)
-            }
-            objectName={'Error Log'}
-          />
-        )} */}
-        {/* {condition == TransactionCondition.PENDING ? (
-          <Loader width={10} height={10} isLight />
-        ) : condition == TransactionCondition.SUCCESS ? (
-          <StyledCheckmark size={30} />
-        ) : (
-          <StyledWarning size={30} />
-        )} */}
-      </FlexedToastMessage>
-    </div>
+      {(txHash || errObj) && (
+        <Flex itemsCenter marginAuto gap={10}>
+          {txHash && (
+            <HyperLink
+              href={getExplorerItemUrl(activeNetwork.explorer.url, txHash, ExplorerscanApi.TX)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button white>Check on {activeNetwork.explorer.name}</Button>
+            </HyperLink>
+          )}
+          {errObj && (
+            <CopyButton
+              white
+              toCopy={
+                errObj.message && errObj.code && errObj.data
+                  ? JSON.stringify({ code: errObj.code, message: errObj.message, data: errObj.data })
+                  : errObj.message && errObj.code
+                  ? JSON.stringify({ code: errObj.code, message: errObj.message })
+                  : JSON.stringify(errObj)
+              }
+              objectName={'Error Log'}
+            />
+          )}
+        </Flex>
+      )}
+    </Flex>
   )
 }

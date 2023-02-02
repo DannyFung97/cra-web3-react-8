@@ -1,0 +1,42 @@
+.success-toast,
+.info-toast,
+.warn-toast,
+.error-toast {
+  --toastify-spinner-color: #150a3d;
+  border-radius: 10px;
+  padding: 5px;
+  transition: all 0.2s, color 0.2s;
+  outline: none;
+}
+
+.success-toast {
+  --toastify-icon-color-success: #fff;
+  --toastify-color-progress-success: rgb(35, 255, 82);
+  background: rgb(24, 179, 58);
+  box-shadow: 0 0 7px #fff;
+  border: 1px solid #fff;
+}
+
+.info-toast {
+  --toastify-icon-color-info: #fff;
+  background: var(--toastify-color-info);
+}
+
+.warn-toast {
+  --toastify-icon-color-warning: #fff;
+  background: rgb(228, 134, 12);
+  box-shadow: 0 0 7px #fff;
+  border: 1px solid #fff;
+}
+
+.error-toast {
+  --toastify-icon-color-error: #fff;
+  --toastify-color-progress-error: rgb(255, 91, 91);
+  background: rgb(211, 51, 51);
+  box-shadow: 0 0 7px #fff;
+  border: 1px solid #fff;
+}
+
+.Toastify__close-button {
+  color: #ffffff;
+}

@@ -22,6 +22,7 @@ export const SwitchLabel = styled.label<{
   border-radius: 100px;
   position: relative;
   transition: background-color 0.2s;
+  background-color: ${({ theme, checked }) => (checked ? theme.accentActive : theme.accentActiveSoft)};
 `
 
 export const SwitchButton = styled.span<{ buttonSize?: number }>`
@@ -32,6 +33,7 @@ export const SwitchButton = styled.span<{ buttonSize?: number }>`
   height: ${({ buttonSize }) => `${ifUndefined(buttonSize, 18)}px`};
   border-radius: 45px;
   transition: 0.2s;
+  background: ${({ theme }) => theme.white};
   box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
   ${SwitchInput}:checked + ${SwitchLabel} & {
     left: calc(100% - 2px);

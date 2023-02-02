@@ -1,5 +1,8 @@
 import styled, { css, keyframes } from 'styled-components'
-// import { ClickProps } from '../Button'
+import { ClickProps } from '../Button'
+import { GeneralTextProps, GeneralTextCss } from '../Text'
+import { BKPT_3, Z_MODAL } from '../../../constants'
+import { GeneralProps, GeneralCss } from '../../general'
 
 export interface BaseModalProps {
   zIndex?: number
@@ -13,12 +16,8 @@ export interface ModalProps extends BaseModalProps {
   disableCloseButton?: boolean
 }
 
-export interface ClickProps {
-  onClick?: any
-  disabled?: boolean
-}
-
 export interface ModalButtonProps extends ClickProps {
+  lightColor: boolean
   hidden?: boolean
 }
 
@@ -33,6 +32,8 @@ export const ModalContainer = styled.div<BaseModalProps>`
   left: 0;
   width: 100vw;
   height: 100vh;
+  background: ${({ theme }) => theme.backgroundScrim};
+  z-index: ${(props) => props.zIndex ?? Z_MODAL};
   ${(props) => (props.isOpen ? 'display: flex;' : 'display: none;')}
   overflow-y: auto;
 `
@@ -42,6 +43,7 @@ export const ModalBase = styled.div<BaseModalProps>`
   position: relative;
   border-radius: 10px;
   padding: 24px;
+  background-color: ${({ theme }) => theme.backgroundSurface};
   border: none;
   opacity: 0;
   ${(props) =>
@@ -49,10 +51,14 @@ export const ModalBase = styled.div<BaseModalProps>`
     css`
       animation: ${FadeInAnimation} 300ms ease-in-out normal forwards;
     `}
+
+  @media screen and (max-width: ${BKPT_3}px) {
+    width: 100%;
+  }
 `
 
 export const ModalClose = styled.div<ModalButtonProps>`
-  visibility: ${(props) => (props.hidden ? 'hidden;' : 'visible;')}
+  visibility: ${(props) => (props.hidden ? 'hidden' : 'visible')};
   cursor: pointer;
   transition: opacity 0.2s;
 
@@ -75,16 +81,24 @@ export const ModalFooter = styled.div`
   margin-top: 20px;
 `
 
-export const ModalRow = styled.div`
+export const ModalRow = styled.div<GeneralProps>`
   display: flex;
   margin-bottom: 20px;
   justify-content: space-around;
+  ${GeneralCss}
+
+  @media screen and (max-width: ${BKPT_3}px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
-export const ModalCell = styled.div`
+export const ModalCell = styled.div<GeneralTextProps & GeneralProps>`
   display: flex;
   align-items: center;
   flex-shrink: 0;
   padding: 24px;
   position: relative;
+  ${GeneralTextCss}
+  ${GeneralCss}
 `
