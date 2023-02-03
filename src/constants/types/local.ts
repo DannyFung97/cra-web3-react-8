@@ -23,3 +23,5 @@ export type WindowDimensions = {
   ifDesktop: <T, V>(desktopArg: T, mobileArg?: V | undefined) => T | V | undefined
   ifMobile: <T, V>(mobileArg: T, desktopArg?: V | undefined) => T | V | undefined
 }
+
+export type CheckboxData = { id: string; checked: boolean }

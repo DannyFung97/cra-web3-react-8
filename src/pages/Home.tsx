@@ -143,7 +143,7 @@ export function Home(): JSX.Element {
             <Tdiv error>error</Tdiv>
             <Tdiv inquiry>inquiry</Tdiv>
           </Flex>
-          <Scrollable px={10} py={0} maxDesktopHeight={'30vh'}>
+          <Scrollable p={0} maxDesktopHeight={'30vh'}>
             <Table textAlign="center" style={{ borderSpacing: '0px 7px' }}>
               <TableHead sticky zIndex={Z_TABLE + 1}>
                 <TableHeader>A</TableHeader>

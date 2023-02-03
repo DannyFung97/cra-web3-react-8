@@ -9,5 +9,6 @@ export const ThinScrollbarCss = css`
   }
   ::-webkit-scrollbar-thumb {
     height: 2em;
+    background-image: ${({ theme }) => theme.accentAction};
   }
 `

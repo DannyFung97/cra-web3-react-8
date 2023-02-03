@@ -110,19 +110,17 @@ export const AccountModal: React.FC<AccountModalProps> = ({ closeModal, isOpen }
           <Tdiv t2 bold mb={10}>
             Recent Transactions
           </Tdiv>
-          <Scrollable style={{ padding: '0 10px 0 10px' }} maxDesktopHeight={'30vh'}>
+          <Scrollable p={0} maxDesktopHeight={'30vh'}>
             <Table textAlign="center" style={{ borderSpacing: '0px 7px' }}>
               <TableHead sticky zIndex={Z_TABLE + 1}>
-                <TableRow>
-                  <TableHeader>Type</TableHeader>
-                  {width > BKPT_5 && (
-                    <>
-                      {/* <TableHeader>Content</TableHeader> */}
-                      <TableHeader>Time</TableHeader>
-                    </>
-                  )}
-                  <TableHeader>Hash</TableHeader>
-                </TableRow>
+                <TableHeader>Type</TableHeader>
+                {width > BKPT_5 && (
+                  <>
+                    {/* <TableHeader>Content</TableHeader> */}
+                    <TableHeader>Time</TableHeader>
+                  </>
+                )}
+                <TableHeader>Hash</TableHeader>
               </TableHead>
               <TableBody>
                 {localTransactions.map((pendingtx: any) => (
