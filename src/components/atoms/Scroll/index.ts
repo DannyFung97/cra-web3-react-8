@@ -1,12 +1,24 @@
 import { BKPT_MOBILE_END } from '../../../constants'
 import styled, { css } from 'styled-components'
 import { GeneralProps, GeneralCss } from '../../general'
-import { ThinScrollbarCss } from '../Scrollbar/ThinScrollbar'
 
 interface ScrollableProps extends GeneralProps {
   maxDesktopHeight?: string
   maxMobileHeight?: string
 }
+
+export const ThinScrollbarCss = css`
+  ::-webkit-scrollbar {
+    width: 0.5em;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.backgroundBackdrop};
+  }
+  ::-webkit-scrollbar-thumb {
+    height: 2em;
+    background-image: ${({ theme }) => theme.accentAction};
+  }
+`
 
 export const Scrollable = styled.div<ScrollableProps>`
   max-height: ${(props) => (props.maxDesktopHeight ? props.maxDesktopHeight : `60vh`)};

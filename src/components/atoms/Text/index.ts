@@ -185,8 +185,7 @@ export const TabLabelLink = styled(Tdiv)<GeneralTextProps & GeneralProps & { sel
     opacity: ${({ selected }) => (selected ? 1 : 0)};
     transition: opacity 300ms, transform 300ms;
   }
-  a:hover::after,
-  a:focus::after {
+  a:hover::after {
     opacity: 1;
     transform: translate3d(0, 0.2em, 0);
   }

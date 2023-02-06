@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Z_NAV, BKPT_TABLET_END, BKPT_MOBILE_END } from '../../../constants'
-import { ThinScrollbarCss } from '../Scrollbar/ThinScrollbar'
+import { ThinScrollbarCss } from '../Scroll'
 import { GeneralTextProps, GeneralTextCss } from '../Text'
 
 interface TopNavProps {

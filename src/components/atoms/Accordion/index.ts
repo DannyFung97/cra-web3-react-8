@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { GeneralCss, GeneralProps } from '../../general'
-import { ThinScrollbarCss } from '../Scrollbar/ThinScrollbar'
+import { ThinScrollbarCss } from '../Scroll'
 
 type AccordionProps = GeneralProps & {
   isOpen: boolean

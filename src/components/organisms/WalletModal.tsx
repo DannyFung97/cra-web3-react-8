@@ -23,7 +23,7 @@ import { useWallet } from '../../context'
 /* import components */
 import { Modal } from '../molecules/Modal'
 // import { Button, ButtonWrapper } from '../../atoms/Button'
-import { Scrollable } from '../atoms/Scrollable'
+import { Scrollable } from '../atoms/Scroll'
 
 /* import constants */
 // import { Z_MODAL } from '../../../constants'

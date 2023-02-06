@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import { GeneralCss, GeneralProps } from '../../general'
 import { ButtonAppearanceCss, ButtonProps } from '../Button'
-import { ThinScrollbarCss } from '../Scrollbar/ThinScrollbar'
+import { ThinScrollbarCss } from '../Scroll'
 
 const isNum = (n: boolean | number): n is number => typeof n === 'number'
 
