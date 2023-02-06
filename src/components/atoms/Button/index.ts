@@ -8,8 +8,9 @@ export interface ClickProps {
 }
 
 export interface ButtonProps extends ClickProps {
+  transparent?: boolean
   white?: boolean
-  action?: boolean
+  info?: boolean
   success?: boolean
   error?: boolean
   warning?: boolean
@@ -24,11 +25,12 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
     let textColor = `${theme.accentTextLightPrimary}`
     let bgColor = `${theme.accentActionSoft}`
 
-    if (props.action) bgColor = `${theme.accentActionSoft}`
+    if (props.info) bgColor = `${theme.accentActionSoft}`
     if (props.success) bgColor = `${theme.accentSuccessSoft}`
     if (props.warning) bgColor = `${theme.accentWarningSoft}`
     if (props.error) bgColor = `${theme.accentFailureSoft}`
     if (props.inquiry) bgColor = `${theme.accentInquirySoft}`
+    if (props.transparent) bgColor = 'transparent'
     if (props.white) {
       textColor = `${theme.accentTextDarkSecondary}`
       bgColor = `${theme.white}`
@@ -43,23 +45,25 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
   let bgColor: string = theme.accentAction
   let hoverBgColor: string = theme.accentActionHighlighted
 
-  if (props.action) bgColor = `${theme.accentAction}`
+  if (props.info) bgColor = `${theme.accentAction}`
   if (props.success) bgColor = `${theme.accentSuccess}`
   if (props.warning) bgColor = `${theme.accentWarning}`
   if (props.error) bgColor = `${theme.accentFailure}`
   if (props.inquiry) bgColor = `${theme.accentInquiry}`
+  if (props.transparent) bgColor = 'transparent'
   if (props.white) {
     textColor = `${theme.accentTextDarkPrimary}`
     bgColor = `${theme.white}`
   }
 
   if (!props.nohover) {
-    if (props.action) hoverBgColor = `${theme.accentActionHighlighted}`
+    if (props.info) hoverBgColor = `${theme.accentActionHighlighted}`
     if (props.success) hoverBgColor = `${theme.accentSuccessHighlighted}`
     if (props.warning) hoverBgColor = `${theme.accentWarningHighlighted}`
     if (props.error) hoverBgColor = `${theme.accentFailureHighlighted}`
     if (props.white) hoverBgColor = `${theme.white}`
     if (props.inquiry) hoverBgColor = `${theme.accentInquiryHighlighted}`
+    if (props.transparent) hoverBgColor = 'transparent'
   }
 
   return css`

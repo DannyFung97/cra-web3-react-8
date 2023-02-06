@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components'
 import 'react-tooltip/dist/react-tooltip.css'
 
 /* import constants */
-import { BKPT_1, BKPT_3, Z_TOOLTIP } from '../../constants'
+import { BKPT_MOBILE_END, Z_TOOLTIP } from '../../constants'
 
 /* import components */
 import { StyledLinkExternal } from '../atoms/Icon'
@@ -42,7 +42,7 @@ export function StyledNavTooltip({ id, tip, children }: StyledTooltipProps & Pro
 
   return (
     <>
-      {width <= BKPT_3 ? (
+      {width <= BKPT_MOBILE_END ? (
         <>
           <div id={id} data-tooltip-content={tip} style={{ padding: '4px 0' }}>
             {children}
@@ -77,7 +77,7 @@ export function StyledTooltip({
 
   return (
     <>
-      {width > BKPT_1 ? (
+      {width > BKPT_MOBILE_END ? (
         <>
           {disabled ? (
             children

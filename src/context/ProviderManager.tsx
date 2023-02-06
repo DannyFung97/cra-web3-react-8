@@ -62,7 +62,7 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
   const gasData = useFetchGasData(provider)
 
   const [networkModal, setNetworkModal] = useState<boolean>(false)
-  const [showTestnets, setShowTestnets] = useState<boolean>(true)
+  const [showTestnets, setShowTestnets] = useState<boolean>(false)
 
   const adjustedNetworks = useMemo(() => {
     const sortedNetworks = NETWORKS.sort((a: Network, b: Network) => {
@@ -129,10 +129,18 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
           <Scrollable maxMobileHeight={'60vh'}>
             <Flex col style={{ margin: 'auto' }} gap={10}>
               {adjustedNetworks.map((network: Network) => (
-                <Card key={network.name} onClick={() => changeNetwork(network.chainId)} style={{ display: 'flex' }}>
+                <Card
+                  px={30}
+                  py={5}
+                  canHover
+                  key={network.name}
+                  onClick={() => changeNetwork(network.chainId)}
+                  justifyCenter
+                  info={network.chainId === activeNetwork.chainId}
+                >
                   <Flex stretch between>
-                    <ModalCell>
-                      <Tdiv t3 primary>
+                    <ModalCell p={10}>
+                      <Tdiv t4 bold>
                         {network.name}
                       </Tdiv>
                     </ModalCell>

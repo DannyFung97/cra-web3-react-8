@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BKPT_3, BKPT_5 } from '../../constants'
+import { BKPT_MOBILE_END, BKPT_TABLET_END } from '../../constants'
 import { WindowDimensions } from '../../constants/types'
 
 function getWindowDimensions() {
@@ -14,17 +14,9 @@ export const useWindowDimensions = (): WindowDimensions => {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions())
 
   const { width } = windowDimensions
-  const isDesktop = width > BKPT_5
-  const isMobile = !isDesktop
-
-  const isSmallerMobile = width <= BKPT_3
-
-  const ifDesktop = function <T, V>(desktopArg: T, mobileArg?: V): T | V | undefined {
-    return isMobile ? mobileArg : desktopArg
-  }
-  const ifMobile = function <T, V>(mobileArg: T, desktopArg?: V): T | V | undefined {
-    return isDesktop ? desktopArg : mobileArg
-  }
+  const isDesktop = width > BKPT_TABLET_END
+  const isTablet = width <= BKPT_TABLET_END && width > BKPT_MOBILE_END
+  const isMobile = width <= BKPT_MOBILE_END
 
   useEffect(() => {
     function handleResize() {
@@ -38,9 +30,7 @@ export const useWindowDimensions = (): WindowDimensions => {
   return {
     ...windowDimensions,
     isDesktop,
+    isTablet,
     isMobile,
-    isSmallerMobile,
-    ifDesktop,
-    ifMobile,
   }
 }

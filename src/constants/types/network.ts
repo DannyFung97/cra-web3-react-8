@@ -5,6 +5,7 @@ export type Network = {
   chainId: number
   isTestnet: boolean
   supportedTxTypes: number[]
+  logo: string
   rpc: {
     urls: string[]
     pollingInterval: number

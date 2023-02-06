@@ -18,10 +18,15 @@ export type WindowDimensions = {
   width: number
   height: number
   isDesktop: boolean
+  isTablet: boolean
   isMobile: boolean
-  isSmallerMobile: boolean
-  ifDesktop: <T, V>(desktopArg: T, mobileArg?: V | undefined) => T | V | undefined
-  ifMobile: <T, V>(mobileArg: T, desktopArg?: V | undefined) => T | V | undefined
 }
 
 export type CheckboxData = { id: string; checked: boolean }
+
+export type PageInfo = {
+  name: string
+  title: string
+  to: string
+  element: JSX.Element
+}

@@ -1,4 +1,4 @@
-import { BKPT_3 } from '../../../constants'
+import { BKPT_MOBILE_END } from '../../../constants'
 import styled, { css } from 'styled-components'
 import { GeneralProps, GeneralCss } from '../../general'
 import { ThinScrollbarCss } from '../Scrollbar/ThinScrollbar'
@@ -16,7 +16,7 @@ export const Scrollable = styled.div<ScrollableProps>`
     ${props.theme.backgroundBackdrop};
   `};
 
-  @media screen and (max-width: ${BKPT_3}px) {
+  @media screen and (max-width: ${BKPT_MOBILE_END}px) {
     max-height: ${(props) => (props.maxMobileHeight ? props.maxMobileHeight : `75vh`)};
   }
   border-radius: 10px;

@@ -1,7 +1,13 @@
 import styled from 'styled-components'
 import { GeneralProps, GeneralCss } from '../../general'
 
-export const UserImage = styled.div<GeneralProps>`
+export const WhiteSpaceDiv = styled.div`
+  padding: 2px;
+  border-radius: 50%;
+  background-color: #fff;
+`
+
+export const User = styled.div<GeneralProps>`
   width: 40px;
   height: 40px;
   img {

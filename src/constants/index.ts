@@ -21,14 +21,8 @@ export const ADDRESS_ZERO = constants.AddressZero
 export const GAS_LIMIT = 800000
 export const MAX_WIDTH = 1340 // max width that the app can expand up to
 
-export const BKPT_1 = 380
-export const BKPT_NAVBAR = 600
-export const BKPT_2 = 770
-export const BKPT_3 = 900
-export const BKPT_4 = 1060
-export const BKPT_5 = 1232
-export const BKPT_6 = 1370
-export const BKPT_7 = 1640
+export const BKPT_MOBILE_END = 640
+export const BKPT_TABLET_END = 1024
 
 // z-index utils (intervals of 10 to allow custom z-indices in between)
 const base = 0

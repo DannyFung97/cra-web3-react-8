@@ -1,5 +1,6 @@
 import { hexValue } from '@ethersproject/bytes'
 import { Network } from '../types'
+import EthereumLogo from '../../assets/svg/networks/ethereum-logo.svg'
 
 const chainId = 5
 
@@ -8,6 +9,7 @@ export const GoerliNetwork: Network = {
   chainId: chainId,
   isTestnet: true,
   supportedTxTypes: [0, 2],
+  logo: EthereumLogo,
   rpc: {
     urls: ['https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'],
     pollingInterval: 12_000,

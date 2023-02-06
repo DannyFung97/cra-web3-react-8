@@ -93,6 +93,7 @@ export const colors = {
 
 const sharedTheme = {
   white: colors.white,
+  gray: colors.gray500,
   black: colors.black,
 }
 

@@ -23,7 +23,7 @@ export interface TextStyleProps extends GeneralProps {
 
   nowrap?: boolean
   mont?: boolean
-  action?: boolean
+  info?: boolean
   success?: boolean
   warning?: boolean
   error?: boolean
@@ -117,7 +117,7 @@ export const TextStyleCss = css<TextStyleProps>`
 
   ${(props) => props.nowrap && `white-space: nowrap;`}
   ${(props) => props.mont && `font-family: Montserrat;`}
-  ${(props) => props.action && `color: ${props.theme.accentAction};`}
+  ${(props) => props.info && `color: ${props.theme.accentAction};`}
   ${(props) => props.success && `color: ${props.theme.accentSuccess};`}
   ${(props) => props.warning && `color: ${props.theme.accentWarning};`}
   ${(props) => props.error && `color: ${props.theme.accentFailure};`}
@@ -162,4 +162,32 @@ export const Tdiv = styled.div<GeneralTextProps & GeneralProps>`
 export const Tspan = styled.span<GeneralTextProps & GeneralProps>`
   ${GeneralTextCss}
   ${GeneralCss}
+`
+
+export const TabLabelLink = styled(Tdiv)<GeneralTextProps & GeneralProps & { selected: boolean }>`
+  a {
+    display: block;
+    position: relative;
+    padding: 0.2em 0;
+    color: ${({ selected, theme }) => {
+      if (selected) return theme.accentAction
+      return theme.textPrimary
+    }};
+  }
+  a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.1em;
+    background-color: ${({ theme }) => theme.accentAction};
+    opacity: ${({ selected }) => (selected ? 1 : 0)};
+    transition: opacity 300ms, transform 300ms;
+  }
+  a:hover::after,
+  a:focus::after {
+    opacity: 1;
+    transform: translate3d(0, 0.2em, 0);
+  }
 `

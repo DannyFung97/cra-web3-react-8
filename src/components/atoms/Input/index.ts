@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import { GeneralTextProps, GeneralTextCss } from '../Text'
 import { Slider } from '@rebass/forms'
-import { BKPT_5 } from '../../../constants'
+import { BKPT_TABLET_END } from '../../../constants'
 import { Text4Css } from '../Text/fonts'
 import { Theme } from '../../../styles/themes'
 
@@ -35,8 +35,8 @@ export const InputSectionWrapper = styled.div<GeneralTextProps>`
   outline: none;
   justify-content: space-between;
   width: 287px;
-  /* for screens bigger than BKPT_5 */
-  @media (min-width: ${BKPT_5}px) {
+  /* for screens bigger than BKPT_TABLET_END */
+  @media (min-width: ${BKPT_TABLET_END}px) {
     width: 521px;
   }
   ${Text4Css}

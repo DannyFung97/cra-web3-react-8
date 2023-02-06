@@ -5,6 +5,10 @@ import { MetaMask } from '@web3-react/metamask'
 import { Network } from '@web3-react/network'
 import { Connector } from '@web3-react/types'
 import { WalletConnect } from '@web3-react/walletconnect'
+import NetworkLogo from '../assets/svg/wallets/browserWallet.svg'
+import MetamaskLogo from '../assets/svg/wallets/metamask-logo.svg'
+import CoinbaseLogo from '../assets/svg/wallets/coinbase-logo.svg'
+import WalletConnectLogo from '../assets/svg/wallets/walletconnect-logo.svg'
 
 import { RPC_URLS, RPC_PROVIDERS } from '../constants/networks'
 
@@ -34,7 +38,7 @@ const [web3Network, web3NetworkHooks] = initializeConnector<Network>(
 )
 export const networkConnection: Connection = {
   name: 'Network',
-  logo: '',
+  logo: NetworkLogo,
   supportedTxTypes: [0],
   connector: web3Network,
   hooks: web3NetworkHooks,
@@ -44,7 +48,7 @@ export const networkConnection: Connection = {
 const [web3Injected, web3InjectedHooks] = initializeConnector<MetaMask>((actions) => new MetaMask({ actions, onError }))
 export const injectedConnection: Connection = {
   name: 'Injected',
-  logo: '',
+  logo: getIsMetaMaskWallet() ? MetamaskLogo : NetworkLogo,
   supportedTxTypes: [0, 2],
   connector: web3Injected,
   hooks: web3InjectedHooks,
@@ -54,7 +58,7 @@ export const injectedConnection: Connection = {
 const [web3GnosisSafe, web3GnosisSafeHooks] = initializeConnector<GnosisSafe>((actions) => new GnosisSafe({ actions }))
 export const gnosisSafeConnection: Connection = {
   name: 'Gnosis Safe',
-  logo: '',
+  logo: NetworkLogo,
   supportedTxTypes: [0],
   connector: web3GnosisSafe,
   hooks: web3GnosisSafeHooks,
@@ -82,7 +86,7 @@ const [web3WalletConnect, web3WalletConnectHooks] = initializeConnector<WalletCo
 })
 export const walletConnectConnection: Connection = {
   name: 'WalletConnect',
-  logo: '',
+  logo: WalletConnectLogo,
   supportedTxTypes: [0],
   connector: web3WalletConnect,
   hooks: web3WalletConnectHooks,
@@ -105,7 +109,7 @@ const [web3CoinbaseWallet, web3CoinbaseWalletHooks] = initializeConnector<Coinba
 
 export const coinbaseWalletConnection: Connection = {
   name: 'Coinbase Wallet',
-  logo: '',
+  logo: CoinbaseLogo,
   supportedTxTypes: [0],
   connector: web3CoinbaseWallet,
   hooks: web3CoinbaseWalletHooks,

@@ -1,7 +1,7 @@
 import styled, { css, keyframes } from 'styled-components'
 import { ClickProps } from '../Button'
 import { GeneralTextProps, GeneralTextCss } from '../Text'
-import { BKPT_3, Z_MODAL } from '../../../constants'
+import { BKPT_MOBILE_END, BKPT_TABLET_END, Z_MODAL } from '../../../constants'
 import { GeneralProps, GeneralCss } from '../../general'
 
 export interface BaseModalProps {
@@ -52,7 +52,7 @@ export const ModalBase = styled.div<BaseModalProps>`
       animation: ${FadeInAnimation} 300ms ease-in-out normal forwards;
     `}
 
-  @media screen and (max-width: ${BKPT_3}px) {
+  @media screen and (max-width: ${BKPT_MOBILE_END}px) {
     width: 100%;
   }
 `
@@ -87,7 +87,7 @@ export const ModalRow = styled.div<GeneralProps>`
   justify-content: space-around;
   ${GeneralCss}
 
-  @media screen and (max-width: ${BKPT_3}px) {
+  @media screen and (max-width: ${BKPT_TABLET_END}px) {
     flex-direction: column;
     align-items: center;
   }

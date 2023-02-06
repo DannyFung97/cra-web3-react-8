@@ -28,12 +28,6 @@ export interface FlexProps extends ButtonProps, GeneralProps {
   shadow?: boolean
   thinScrollbar?: boolean
   zIndex?: number
-
-  bgAction?: boolean
-  bgSuccess?: boolean
-  bgWarn?: boolean
-  bgError?: boolean
-  bgInquiry?: boolean
 }
 
 // prettier-ignore
@@ -61,12 +55,5 @@ export const Flex = styled.div<FlexProps>`
   ${({ shadow })        => shadow                      ? css`box-shadow: 0px 0px 30px -10px rgba(138, 138, 138, 0.15);`                : ""}
   ${({ thinScrollbar }) => thinScrollbar               ? ThinScrollbarCss                                                 : ""}
   ${({ zIndex })        => zIndex        !== undefined ? css`z-index: ${zIndex};`                                         : ""}
-  
-  ${(props)             => props.bgAction                ? css`background-color: ${(props.theme).accentAction};` : ""}
-  ${(props)             => props.bgError               ? css`background-color: ${(props.theme).accentCritical};` : ""}
-  ${(props)             => props.bgSuccess             ? css`background-color: ${(props.theme).accentSuccess};` : ""}
-  ${(props)             => props.bgWarn                ? css`background-color: ${(props.theme).accentWarning};` : ""}
-  ${(props)             => props.bgInquiry             ? css`background-color: ${(props.theme).accentInquiry};` : ""}
-
   ${GeneralCss}
   `

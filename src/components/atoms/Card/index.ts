@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components'
 import { GeneralCss, GeneralProps } from '../../general'
 import { ClickProps } from '../Button'
-import { BKPT_3, BKPT_4 } from '../../../constants'
 import { GeneralTextProps, GeneralTextCss } from '../Text'
 import { Flex, FlexProps } from '../Flex'
+import { BKPT_MOBILE_END, BKPT_TABLET_END } from '../../../constants'
 
 interface CardProps extends ClickProps, FlexProps {
   transparent?: boolean
@@ -11,7 +11,7 @@ interface CardProps extends ClickProps, FlexProps {
   success?: boolean
   warning?: boolean
   error?: boolean
-  action?: boolean
+  info?: boolean
   inquiry?: boolean
 }
 
@@ -24,7 +24,7 @@ const CardCss = css<CardProps>`
   padding: 16px;
   background: ${({ theme }) => theme.backgroundInteractive};
   ${(props) => props.success && `background: ${props.theme.accentSuccess};`}
-  ${(props) => props.action && `background: ${props.theme.accentAction};`}
+  ${(props) => props.info && `background: ${props.theme.accentAction};`}
   ${(props) => props.warning && `background: ${props.theme.accentWarning};`}
   ${(props) => props.error && `background: ${props.theme.accentCritical};`}
   ${(props) => props.inquiry && `background: ${props.theme.accentInquiry};`}
@@ -36,16 +36,17 @@ export const CardContainer = styled.div<CardContainerProps & GeneralTextProps>`
   display: grid;
   grid-template-columns: repeat(${(props) => (props.cardsPerRow ? props.cardsPerRow : '3')}, 1fr);
   gap: 24px;
-  ${GeneralTextCss}
-  ${GeneralCss}
 
-  @media screen and (max-width: ${BKPT_4}px) {
+  @media screen and (max-width: ${BKPT_TABLET_END}px) {
     grid-template-columns: repeat(${(props) => (props.cardsPerRow ? props.cardsPerRow - 1 : '2')}, 1fr);
   }
 
-  @media screen and (max-width: ${BKPT_3}px) {
+  @media screen and (max-width: ${BKPT_MOBILE_END}px) {
     grid-template-columns: repeat(${(props) => (props.cardsPerRow ? props.cardsPerRow - 2 : '1')}, 1fr);
   }
+
+  ${GeneralTextCss}
+  ${GeneralCss}
 `
 
 export const Card = styled(Flex)<CardProps>`

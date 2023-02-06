@@ -15,7 +15,7 @@ import { BalanceDropdownOptions, GenericInputSection } from '../components/organ
 import { ZERO, Z_TABLE } from '../constants'
 import { TransactionCondition } from '../constants/enums'
 import { ReadToken } from '../constants/types'
-import { useCache, useGeneral, useNotifications } from '../context'
+import { useGeneral, useNotifications } from '../context'
 import { fixed, formatAmount } from '../utils'
 
 const testTokens: ReadToken[] = [
@@ -41,8 +41,7 @@ const testTokens: ReadToken[] = [
 ]
 
 export function Home(): JSX.Element {
-  const { appTheme, toggleTheme } = useGeneral()
-  const { openAccountModal } = useCache()
+  const { appTheme } = useGeneral()
   const { makeTxToast } = useNotifications()
 
   const [openAccordion, setOpenAccordion] = useState(false)
@@ -111,9 +110,6 @@ export function Home(): JSX.Element {
     <Content>
       <Flex col itemsCenter gap={10}>
         <Flex gap={10}>
-          <Button inquiry onClick={openAccountModal}>
-            Open Account Modal
-          </Button>
           <Button success onClick={successToast}>
             create successful toast
           </Button>
@@ -123,7 +119,6 @@ export function Home(): JSX.Element {
           <Button error onClick={failToast}>
             create failed toast
           </Button>
-          <Button onClick={toggleTheme}>toggle theme</Button>
         </Flex>
         <HorizontalSeparator widthP={100} />
         <Flex gap={10} widthP={100}>
@@ -137,7 +132,7 @@ export function Home(): JSX.Element {
             <Tdiv darkPrimary>darkPrimary</Tdiv>
             <Tdiv darkSecondary>darkSecondary</Tdiv>
             <Tdiv darkTertiary>darkTertiary</Tdiv>
-            <Tdiv action>action</Tdiv>
+            <Tdiv info>info</Tdiv>
             <Tdiv success>success</Tdiv>
             <Tdiv warning>warning</Tdiv>
             <Tdiv error>error</Tdiv>
@@ -146,9 +141,11 @@ export function Home(): JSX.Element {
           <Scrollable p={0} maxDesktopHeight={'30vh'}>
             <Table textAlign="center" style={{ borderSpacing: '0px 7px' }}>
               <TableHead sticky zIndex={Z_TABLE + 1}>
-                <TableHeader>A</TableHeader>
-                <TableHeader>B</TableHeader>
-                <TableHeader>C</TableHeader>
+                <TableRow>
+                  <TableHeader>A</TableHeader>
+                  <TableHeader>B</TableHeader>
+                  <TableHeader>C</TableHeader>
+                </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
@@ -178,9 +175,11 @@ export function Home(): JSX.Element {
                 </TableRow>
               </TableBody>
               <TableFoot sticky zIndex={Z_TABLE + 1}>
-                <TableHeader>E</TableHeader>
-                <TableHeader>F</TableHeader>
-                <TableHeader>G</TableHeader>
+                <TableRow>
+                  <TableHeader>E</TableHeader>
+                  <TableHeader>F</TableHeader>
+                  <TableHeader>G</TableHeader>
+                </TableRow>
               </TableFoot>
             </Table>
           </Scrollable>
