@@ -88,7 +88,12 @@ export function CacheManager(props: PropsWithChildren): JSX.Element {
 
   return (
     <CacheContext.Provider value={value}>
-      <AccountModal closeModal={closeModal} isOpen={accountModal} />
+      <AccountModal
+        handleClose={closeModal}
+        isOpen={accountModal}
+        modalTitle={'My Account'}
+        disableCloseButton={false}
+      />
       {props.children}
     </CacheContext.Provider>
   )

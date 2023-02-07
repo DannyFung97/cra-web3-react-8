@@ -35,13 +35,9 @@ import usePrevious from '../../hooks/internal/usePrevious'
 import { Button } from '../atoms/Button'
 import { Flex } from '../atoms/Flex'
 import { Z_MODAL } from '../../constants'
+import { ModalProps } from '../atoms/Modal'
 
-interface WalletModalProps {
-  closeModal: () => void
-  isOpen: boolean
-}
-
-export const WalletModal: React.FC<WalletModalProps> = ({ closeModal, isOpen }) => {
+export const WalletModal: React.FC<ModalProps> = (props) => {
   /************************************************************************************* 
     
   hooks
@@ -49,16 +45,6 @@ export const WalletModal: React.FC<WalletModalProps> = ({ closeModal, isOpen }) 
   *************************************************************************************/
   const { connector, isActive, account } = useWeb3React()
   const { disconnect } = useWallet()
-
-  /************************************************************************************* 
-    
-  local functions
-
-  *************************************************************************************/
-  const handleClose = useCallback(() => {
-    closeModal()
-  }, [closeModal])
-
   const activePrevious = usePrevious(isActive)
   const connectorPrevious = usePrevious(connector)
 
@@ -66,12 +52,12 @@ export const WalletModal: React.FC<WalletModalProps> = ({ closeModal, isOpen }) 
   // or if the connector is different, close modal
   useEffect(() => {
     if ((isActive && !activePrevious) || (connector && connector !== connectorPrevious)) {
-      handleClose()
+      props.handleClose()
     }
-  }, [isActive, activePrevious, handleClose, connector, connectorPrevious])
+  }, [isActive, activePrevious, props.handleClose, connector, connectorPrevious])
 
   return (
-    <Modal handleClose={handleClose} isOpen={isOpen} modalTitle={'Connect a Wallet'} zIndex={Z_MODAL + 1}>
+    <Modal {...props} zIndex={Z_MODAL + 1}>
       <Flex col gap={10}>
         <Scrollable maxMobileHeight={'60vh'}>
           <WalletList />

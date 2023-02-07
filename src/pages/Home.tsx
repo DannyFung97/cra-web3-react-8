@@ -11,6 +11,7 @@ import { Tdiv } from '../components/atoms/Text'
 import { CheckboxOption } from '../components/molecules/CheckboxOption'
 import { SmallerInputSection } from '../components/molecules/InputSection'
 import { StyledTooltip } from '../components/molecules/Tooltip'
+import { CalendarModal } from '../components/organisms/CalendarModal'
 import { BalanceDropdownOptions, GenericInputSection } from '../components/organisms/Dropdown'
 import { ZERO, Z_TABLE } from '../constants'
 import { TransactionCondition } from '../constants/enums'
@@ -50,6 +51,8 @@ export function Home(): JSX.Element {
   const [d1Input, setD1Input] = useState<string>('')
   const [inputValue, setInputValue] = useState('')
   const [checked, setChecked] = useState(false)
+  const [openDates, setOpenDates] = useState<boolean>(false)
+  const [date, setDate] = useState<Date>(new Date())
 
   const successToast = async () => {
     const now = Date.now()
@@ -326,6 +329,14 @@ export function Home(): JSX.Element {
             <StyledTooltip id={'tt2'} tip={'I am a tooltip with a link'} alwaysShowChildren link={'https://google.com'}>
               <Button>Hover over me</Button>
             </StyledTooltip>
+            <Button onClick={() => setOpenDates(!openDates)}>Open Calendar</Button>
+            <CalendarModal
+              modalTitle={'Select Date'}
+              handleClose={() => setOpenDates(false)}
+              isOpen={openDates}
+              selectedDate={date}
+              setSelectedDate={setDate}
+            />
           </Flex>
         </Flex>
       </Flex>

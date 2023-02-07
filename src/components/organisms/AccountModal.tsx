@@ -28,13 +28,9 @@ import { useFetchTxHistoryByAddress } from '../../hooks/api/useTransactionHistor
 import { SmallerInputSection } from '../molecules/InputSection'
 import { useContracts } from '../../context/ContractsManager'
 import { ConnectionType, getConnectionName, SUPPORTED_WALLETS } from '../../wallet'
+import { ModalProps } from '../atoms/Modal'
 
-interface AccountModalProps {
-  closeModal: () => void
-  isOpen: boolean
-}
-
-export const AccountModal: React.FC<AccountModalProps> = ({ closeModal, isOpen }) => {
+export const AccountModal: React.FC<ModalProps> = (props) => {
   /*************************************************************************************
   hooks
   *************************************************************************************/
@@ -47,16 +43,9 @@ export const AccountModal: React.FC<AccountModalProps> = ({ closeModal, isOpen }
   const { width, isMobile } = useWindowDimensions()
   const txHistory = useFetchTxHistoryByAddress()
   const name = useENS()
-  /************************************************************************************* 
-    
-  local functions
-  *************************************************************************************/
-  const handleClose = useCallback(() => {
-    closeModal()
-  }, [closeModal])
 
   return (
-    <Modal handleClose={handleClose} isOpen={isOpen} modalTitle={'My Account'} disableCloseButton={false}>
+    <Modal {...props}>
       <Flex col={isMobile} gap={10} mb={10}>
         {account && selectedProvider && (
           <Card col>

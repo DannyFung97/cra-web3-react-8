@@ -4,7 +4,7 @@ import { GeneralTextProps, GeneralTextCss } from '../Text'
 import { BKPT_MOBILE_END, BKPT_TABLET_END, Z_MODAL } from '../../../constants'
 import { GeneralProps, GeneralCss } from '../../general'
 
-export interface BaseModalProps {
+export interface BaseModalProps extends GeneralProps {
   zIndex?: number
   isOpen: boolean
 }

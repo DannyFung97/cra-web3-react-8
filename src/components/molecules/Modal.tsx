@@ -1,17 +1,16 @@
 import React, { Fragment, PropsWithChildren } from 'react'
 import { useGeneral } from '../../context'
 import { HorizontalSeparator } from '../atoms/Break'
-import { ModalContainer, ModalBase, ModalHeader, ModalClose, ModalFooter, ModalButtonProps } from '../atoms/Modal'
+import {
+  ModalContainer,
+  ModalBase,
+  ModalHeader,
+  ModalClose,
+  ModalFooter,
+  ModalButtonProps,
+  ModalProps,
+} from '../atoms/Modal'
 import { Tdiv } from '../atoms/Text'
-
-type ModalProps = {
-  handleClose: () => void
-  isOpen: boolean
-  zIndex?: number
-  modalTitle: string
-  centerTitle?: boolean
-  disableCloseButton?: boolean
-} & PropsWithChildren
 
 export function Modal(props: ModalProps): JSX.Element {
   const { appTheme } = useGeneral()

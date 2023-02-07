@@ -1,6 +1,7 @@
+import { PropsWithChildren } from 'react'
 import { css } from 'styled-components'
 
-export interface ReactProps {
+export interface ReactProps extends PropsWithChildren {
   style?: React.CSSProperties
 }
 
