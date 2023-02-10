@@ -16,6 +16,7 @@ import { Tdiv } from '../components/atoms/Text'
 import { Flex } from '../components/atoms/Flex'
 import { Card } from '../components/atoms/Card'
 import { Z_MODAL } from '../constants'
+import { openStyle } from '../styles/animation-styles'
 
 /*
 
@@ -68,7 +69,8 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
     const sortedNetworks = NETWORKS.sort((a: Network, b: Network) => {
       return a.isTestnet === b.isTestnet ? 0 : a.isTestnet ? 1 : -1
     })
-    return showTestnets ? sortedNetworks : sortedNetworks.filter((n: Network) => !n.isTestnet)
+    // return showTestnets ? sortedNetworks : sortedNetworks.filter((n: Network) => !n.isTestnet)
+    return sortedNetworks
   }, [showTestnets])
 
   const openModal = useCallback(() => {
@@ -137,6 +139,7 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
                   onClick={() => changeNetwork(network.chainId)}
                   justifyCenter
                   info={network.chainId === activeNetwork.chainId}
+                  style={openStyle(network.isTestnet && showTestnets)}
                 >
                   <Flex stretch between>
                     <ModalCell p={10}>

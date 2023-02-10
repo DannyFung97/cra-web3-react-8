@@ -17,7 +17,7 @@ import { ZERO, Z_TABLE } from '../constants'
 import { TransactionCondition } from '../constants/enums'
 import { ReadToken } from '../constants/types'
 import { useGeneral, useNotifications } from '../context'
-import { variants } from '../styles/animation-variants'
+import { variants } from '../styles/animation-styles'
 import { fixed, formatAmount } from '../utils'
 
 const testTokens: ReadToken[] = [

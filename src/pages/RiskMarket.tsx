@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import React, { PropsWithChildren } from 'react'
 import { CardContainer } from '../components/atoms/Card'
 import { RiskMarketCard } from '../components/organisms/RiskMarketCard'
-import { variants } from '../styles/animation-variants'
+import { variants } from '../styles/animation-styles'
 
 export function RiskMarket(props: PropsWithChildren): JSX.Element {
   return (

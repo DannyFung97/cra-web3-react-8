@@ -7,7 +7,7 @@ import { Tdiv } from '../components/atoms/Text'
 import { GenericInputSection } from '../components/organisms/Dropdown'
 import { useRiskMarket } from '../context/RiskMarketManager'
 import { useWindowDimensions } from '../hooks/internal/useWindowDimensions'
-import { variants } from '../styles/animation-variants'
+import { variants } from '../styles/animation-styles'
 
 function BeneficiaryDashboard(props: PropsWithChildren): JSX.Element {
   const [amount, setAmount] = React.useState('0')

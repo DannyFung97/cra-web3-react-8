@@ -66,3 +66,12 @@ export const variants = {
     },
   },
 }
+
+export const openStyle = (closed: boolean) => {
+  return {
+    maxHeight: closed ? '0vh' : '100vh',
+    opacity: closed ? 0 : 1,
+    transform: closed ? 'scaleY(0)' : 'scaleY(1)',
+    transition: 'all 200ms ease',
+  }
+}

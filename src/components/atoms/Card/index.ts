@@ -30,7 +30,7 @@ const CardCss = css<CardProps>`
   ${GeneralCss}
 `
 
-export const CardContainer = styled(motion.div)`
+export const CardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;

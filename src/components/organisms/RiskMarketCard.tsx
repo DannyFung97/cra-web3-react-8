@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRiskMarket } from '../../context/RiskMarketManager'
+import { openStyle } from '../../styles/animation-styles'
 import { Button } from '../atoms/Button'
 import { Card } from '../atoms/Card'
 import { Flex } from '../atoms/Flex'
@@ -39,16 +40,7 @@ export const RiskMarketCard = () => {
             </Tdiv>
             <Tdiv t4>33</Tdiv>
           </Flex>
-          <Flex
-            between
-            widthP={100}
-            mb={isBuyer ? 0 : 16}
-            style={{
-              maxHeight: isBuyer ? '0vh' : '100vh',
-              transform: isBuyer ? 'scaleY(0)' : 'scaleY(1)',
-              transition: 'all 200ms ease',
-            }}
-          >
+          <Flex between widthP={100} mb={isBuyer ? 0 : 16} style={openStyle(isBuyer)}>
             <Tdiv t4 secondary>
               Cover Demand
             </Tdiv>
