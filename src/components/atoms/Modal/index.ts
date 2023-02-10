@@ -26,6 +26,11 @@ export const FadeInAnimation = keyframes`
   to { opacity: 1; }
 `
 
+export const DropInAnimation = keyframes`  
+  from { transform: translateY(100px); opacity: 0; }
+  to { transform: translateY(0px); opacity: 1; }
+`
+
 export const ModalContainer = styled.div<BaseModalProps>`
   position: fixed;
   top: 0;
@@ -36,6 +41,7 @@ export const ModalContainer = styled.div<BaseModalProps>`
   z-index: ${(props) => props.zIndex ?? Z_MODAL};
   ${(props) => (props.isOpen ? 'display: flex;' : 'display: none;')}
   overflow-y: auto;
+  animation: ${FadeInAnimation} 300ms ease-in-out normal forwards;
 `
 
 export const ModalBase = styled.div<BaseModalProps>`
@@ -49,7 +55,7 @@ export const ModalBase = styled.div<BaseModalProps>`
   ${(props) =>
     props.isOpen &&
     css`
-      animation: ${FadeInAnimation} 300ms ease-in-out normal forwards;
+      animation: ${DropInAnimation} 300ms ease-in-out normal forwards;
     `}
 
   @media screen and (max-width: ${BKPT_MOBILE_END}px) {

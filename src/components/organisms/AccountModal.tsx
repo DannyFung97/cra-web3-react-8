@@ -75,16 +75,16 @@ export const AccountModal: React.FC<ModalProps> = (props) => {
         <Card col>
           <Flex around>
             <Flex col>
-              <Tdiv t4>Wallet</Tdiv>
-              <Tdiv big3 bold nowrap>
+              <Tdiv t6>Wallet</Tdiv>
+              <Tdiv t1 bold nowrap>
                 {account
                   ? getConnectionName(SUPPORTED_WALLETS.find((c) => c.connector === connector)?.type as ConnectionType)
                   : 'Not Connected'}
               </Tdiv>
             </Flex>
             <Flex col>
-              <Tdiv t4>Network</Tdiv>
-              <Tdiv big3 bold nowrap>
+              <Tdiv t6>Network</Tdiv>
+              <Tdiv t1 bold nowrap>
                 {capitalizeFirstLetter(activeNetwork.name)}
               </Tdiv>
             </Flex>

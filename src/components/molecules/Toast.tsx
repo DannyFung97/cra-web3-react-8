@@ -118,12 +118,12 @@ export const TransactionToast: React.FC<TransactionToastProps> = ({ txType, cond
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button white>Check on {activeNetwork.explorer.name}</Button>
+              <Button secondary>Check on {activeNetwork.explorer.name}</Button>
             </HyperLink>
           )}
           {errObj && (
             <CopyButton
-              white
+              secondary
               toCopy={
                 errObj.message && errObj.code && errObj.data
                   ? JSON.stringify({ code: errObj.code, message: errObj.message, data: errObj.data })

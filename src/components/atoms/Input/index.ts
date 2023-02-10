@@ -21,15 +21,15 @@ export const StyledGenericIconAndText = styled.div<{ disabled?: boolean; width?:
   display: flex;
   align-items: center;
   border-right: 1px solid ${({ theme }) => theme.backgroundOutline};
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
   gap: 4px;
   ${({ width }) => width && `width: ${width}px`};
 `
 
 export const InputSectionWrapper = styled.div<GeneralTextProps>`
   display: flex;
-  border-radius: 10px;
+  border-radius: 100px;
   background-color: ${({ theme }) => theme.backgroundInteractive};
   border: 1px solid ${({ theme }) => theme.backgroundOutline};
   outline: none;

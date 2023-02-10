@@ -35,13 +35,13 @@ export const Text7Css = css`
 `
 
 export const BigSize1Css = css`
-  font-size: 48px;
+  font-size: 60px;
 `
 
 export const BigSize2Css = css`
-  font-size: 36px;
+  font-size: 48px;
 `
 
 export const BigSize3Css = css`
-  font-size: 24px;
+  font-size: 36px;
 `

@@ -11,6 +11,11 @@ export type Network = {
     pollingInterval: number
     blockConfirms: number
   }
+  nativeCurrency: {
+    name: string
+    symbol: string
+    decimals: number
+  }
   explorer: {
     name: string
     key: string

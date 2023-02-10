@@ -135,13 +135,17 @@ export const CalendarModal: React.FC<
           </CalendarContainer>
         )}
         <Button
+          big={selectedDate.toDateString() != date.toDateString()}
           onClick={() => {
             setSelectedDate(date)
             handleClose()
           }}
           disabled={selectedDate.toDateString() == date.toDateString()}
         >
-          Confirm New Date
+          Confirm{' '}
+          {selectedDate.toDateString() == date.toDateString()
+            ? 'New Date'
+            : date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
         </Button>
       </Flex>
     </Modal>

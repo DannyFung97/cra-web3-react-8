@@ -1,9 +1,9 @@
+import { motion } from 'framer-motion'
 import React, { useCallback, useState } from 'react'
 import { Accordion } from '../components/atoms/Accordion'
 import { HorizontalSeparator } from '../components/atoms/Break'
 import { Button } from '../components/atoms/Button'
 import { Card } from '../components/atoms/Card'
-import { Content } from '../components/atoms/Container'
 import { Flex } from '../components/atoms/Flex'
 import { Scrollable } from '../components/atoms/Scroll'
 import { Table, TableBody, TableData, TableFoot, TableHead, TableHeader, TableRow } from '../components/atoms/Table'
@@ -17,6 +17,7 @@ import { ZERO, Z_TABLE } from '../constants'
 import { TransactionCondition } from '../constants/enums'
 import { ReadToken } from '../constants/types'
 import { useGeneral, useNotifications } from '../context'
+import { variants } from '../styles/animation-variants'
 import { fixed, formatAmount } from '../utils'
 
 const testTokens: ReadToken[] = [
@@ -110,16 +111,16 @@ export function Home(): JSX.Element {
   )
 
   return (
-    <Content>
+    <motion.div variants={variants.drop} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.2 }}>
       <Flex col itemsCenter gap={10}>
         <Flex gap={10}>
-          <Button success onClick={successToast}>
+          <Button big success onClick={successToast}>
             create successful toast
           </Button>
-          <Button warning onClick={cancelledToast}>
+          <Button big warning onClick={cancelledToast}>
             create cancelled toast
           </Button>
-          <Button error onClick={failToast}>
+          <Button big error onClick={failToast}>
             create failed toast
           </Button>
         </Flex>
@@ -187,7 +188,7 @@ export function Home(): JSX.Element {
             </Table>
           </Scrollable>
           <Flex col>
-            <Button inquiry onClick={() => setOpenAccordion(!openAccordion)}>
+            <Button big inquiry onClick={() => setOpenAccordion(!openAccordion)}>
               Test Accordion
             </Button>
             <Accordion isOpen={openAccordion} customHeight={'30vh'}>
@@ -340,6 +341,6 @@ export function Home(): JSX.Element {
           </Flex>
         </Flex>
       </Flex>
-    </Content>
+    </motion.div>
   )
 }

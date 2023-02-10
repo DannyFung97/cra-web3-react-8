@@ -1,9 +1,10 @@
 import styled, { css } from 'styled-components'
-import { GeneralCss, GeneralProps } from '../../general'
+import { GeneralCss } from '../../general'
 import { ClickProps } from '../Button'
 import { GeneralTextProps, GeneralTextCss } from '../Text'
 import { Flex, FlexProps } from '../Flex'
 import { BKPT_MOBILE_END, BKPT_TABLET_END } from '../../../constants'
+import { motion } from 'framer-motion'
 
 interface CardProps extends ClickProps, FlexProps {
   transparent?: boolean
@@ -15,14 +16,11 @@ interface CardProps extends ClickProps, FlexProps {
   inquiry?: boolean
 }
 
-interface CardContainerProps extends GeneralProps, FlexProps {
-  cardsPerRow?: number
-}
-
 const CardCss = css<CardProps>`
-  border-radius: 12px;
-  padding: 16px;
-  background: ${({ theme }) => theme.backgroundInteractive};
+  border-radius: 36px;
+  padding: 24px;
+  background: ${({ theme }) => theme.backgroundSurface};
+  transition: all 0.2s ease-in-out;
   ${(props) => props.success && `background: ${props.theme.accentSuccess};`}
   ${(props) => props.info && `background: ${props.theme.accentAction};`}
   ${(props) => props.warning && `background: ${props.theme.accentWarning};`}
@@ -32,17 +30,17 @@ const CardCss = css<CardProps>`
   ${GeneralCss}
 `
 
-export const CardContainer = styled.div<CardContainerProps & GeneralTextProps>`
+export const CardContainer = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(${(props) => (props.cardsPerRow ? props.cardsPerRow : '3')}, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 
   @media screen and (max-width: ${BKPT_TABLET_END}px) {
-    grid-template-columns: repeat(${(props) => (props.cardsPerRow ? props.cardsPerRow - 1 : '2')}, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media screen and (max-width: ${BKPT_MOBILE_END}px) {
-    grid-template-columns: repeat(${(props) => (props.cardsPerRow ? props.cardsPerRow - 2 : '1')}, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 
   ${GeneralTextCss}

@@ -12,6 +12,8 @@ export const HeroContainer = styled.div<HeightAndWidthProps & GeneralProps>`
 `
 
 export const Content = styled.div<GeneralProps>`
-  padding: 20px 0;
+  margin: auto;
+  padding: 20px;
+  max-width: 1200px;
   ${GeneralCss}
 `

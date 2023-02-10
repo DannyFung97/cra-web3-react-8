@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { PropsWithChildren } from 'react'
 import { MobileNavPanelComponent, TopNav, MobileNavMenu } from '../atoms/Navbar'
@@ -9,7 +9,7 @@ import makeBlockie from 'ethereum-blockies-base64'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useCache, useGeneral, useNetwork } from '../../context'
 import { useENS } from '../../hooks/wallet/useENS'
-import { PageInfo } from '../../constants/types'
+import { RouteInfo } from '../../constants/types'
 import { shortenAddress } from '../../utils'
 import { TabLabelLink, Tdiv } from '../atoms/Text'
 import { UserImage } from '../molecules/UserImage'
@@ -22,7 +22,7 @@ import { ModalCloseButton } from '../molecules/Modal'
 import { Card } from '../atoms/Card'
 
 export function MobileNavPanel(
-  props: PropsWithChildren & { show: boolean; setShow: (show: boolean) => void; pages: PageInfo[] }
+  props: PropsWithChildren & { show: boolean; setShow: (show: boolean) => void; routeInfoArr: RouteInfo[] }
 ): JSX.Element {
   const { appTheme, toggleTheme } = useGeneral()
   const { isMobile } = useWindowDimensions()
@@ -36,16 +36,20 @@ export function MobileNavPanel(
           <ModalCloseButton lightColor={appTheme == 'dark'} onClick={() => props.setShow(false)} />
         </Flex>
         <Flex col gap={10} p={10}>
-          {props.pages.map((item) => (
+          {props.routeInfoArr.map((page) => (
             <Card
               justifyCenter
-              key={item.to}
+              key={page.to}
               onClick={() => {
                 props.setShow(false)
-                navigate(item.to)
+                navigate(page.to)
               }}
             >
-              <Tdiv info={location.pathname == item.to}>{item.name}</Tdiv>
+              <Tdiv
+                info={location.pathname == page.to || page.children?.some((child) => location.pathname.includes(child))}
+              >
+                {page.name}
+              </Tdiv>
             </Card>
           ))}
         </Flex>
@@ -76,14 +80,14 @@ export function MobileNavPanel(
   )
 }
 
-export function MobileNavbar(props: PropsWithChildren & { pages: PageInfo[] }): JSX.Element {
+export function MobileNavbar(props: PropsWithChildren & { routeInfoArr: RouteInfo[] }): JSX.Element {
   const { account } = useWeb3React()
   const { openAccountModal } = useCache()
   const [show, setShow] = useState(false)
 
   return (
     <TopNav>
-      <MobileNavPanel show={show} setShow={setShow} pages={props.pages} />
+      <MobileNavPanel show={show} setShow={setShow} routeInfoArr={props.routeInfoArr} />
       <Flex between>
         <Button transparent nohover onClick={() => setShow(!show)}>
           <Tdiv primary>
@@ -104,7 +108,7 @@ export function MobileNavbar(props: PropsWithChildren & { pages: PageInfo[] }): 
   )
 }
 
-export function FullNavbar(props: PropsWithChildren & { pages: PageInfo[] }): JSX.Element {
+export function FullNavbar(props: PropsWithChildren & { routeInfoArr: RouteInfo[] }): JSX.Element {
   const { appTheme, toggleTheme } = useGeneral()
   const { account } = useWeb3React()
   const name = useENS()
@@ -131,13 +135,17 @@ export function FullNavbar(props: PropsWithChildren & { pages: PageInfo[] }): JS
         <Flex gap={20} itemsCenter>
           <Logo location={location} />
           <Flex gap={20}>
-            {props.pages.map((page, i) => (
-              <>
-                <TabLabelLink key={page.to} t2 selected={page.to == location.pathname}>
+            {props.routeInfoArr.map((page) => (
+              <Fragment key={page.to}>
+                <TabLabelLink
+                  t4
+                  selected={
+                    location.pathname == page.to || page.children?.some((child) => location.pathname.includes(child))
+                  }
+                >
                   <StyledNavLink to={page.to}>{page.name}</StyledNavLink>
                 </TabLabelLink>
-                {props.pages.length > i + 1 && <VerticalSeparator />}
-              </>
+              </Fragment>
             ))}
           </Flex>
         </Flex>

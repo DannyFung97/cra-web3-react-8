@@ -9,6 +9,7 @@ export interface ClickProps {
 
 export interface ButtonProps extends ClickProps {
   transparent?: boolean
+  secondary?: boolean
   white?: boolean
   info?: boolean
   success?: boolean
@@ -18,6 +19,7 @@ export interface ButtonProps extends ClickProps {
   hidden?: boolean
   noradius?: boolean
   nohover?: boolean
+  big?: boolean
 }
 
 const ButtonColorFunc = (props: ButtonProps, theme: any) => {
@@ -31,6 +33,10 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
     if (props.error) bgColor = `${theme.accentFailureSoft}`
     if (props.inquiry) bgColor = `${theme.accentInquirySoft}`
     if (props.transparent) bgColor = 'transparent'
+    if (props.secondary) {
+      textColor = `${theme.accentTextDarkSecondary}`
+      bgColor = `${theme.backgroundInteractive}`
+    }
     if (props.white) {
       textColor = `${theme.accentTextDarkSecondary}`
       bgColor = `${theme.white}`
@@ -51,6 +57,10 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
   if (props.error) bgColor = `${theme.accentFailure}`
   if (props.inquiry) bgColor = `${theme.accentInquiry}`
   if (props.transparent) bgColor = 'transparent'
+  if (props.secondary) {
+    textColor = `${theme.accentTextDarkPrimary}`
+    bgColor = `${theme.backgroundInteractive}`
+  }
   if (props.white) {
     textColor = `${theme.accentTextDarkPrimary}`
     bgColor = `${theme.white}`
@@ -61,6 +71,7 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
     if (props.success) hoverBgColor = `${theme.accentSuccessHighlighted}`
     if (props.warning) hoverBgColor = `${theme.accentWarningHighlighted}`
     if (props.error) hoverBgColor = `${theme.accentFailureHighlighted}`
+    if (props.secondary) hoverBgColor = `${theme.backgroundInteractive}`
     if (props.white) hoverBgColor = `${theme.white}`
     if (props.inquiry) hoverBgColor = `${theme.accentInquiryHighlighted}`
     if (props.transparent) hoverBgColor = 'transparent'
@@ -81,7 +92,7 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
 export const ButtonAppearanceCss = css<ButtonProps & GeneralProps>`
   outline: none;
   border: none;
-  ${(props) => !props.noradius && `border-radius: 10px;`}
+  ${(props) => !props.noradius && `border-radius: 100px;`}
   transition: all 0.2s, color 0.2s;
   cursor: pointer;
   visibility: ${(props) => (props.hidden ? 'hidden;' : 'visible;')};
@@ -95,6 +106,7 @@ export const ButtonAppearanceCss = css<ButtonProps & GeneralProps>`
   ${(props) => props.pr !== undefined && 'padding-right: 16px;'}
   ${(props) => props.width == undefined && 'min-width: 90px;'}
   ${(props) => props.height == undefined && 'min-height: 34px;'}
+  ${(props) => props.big && 'padding: 16px;'}
   ${Text4Css}
   ${GeneralCss}
 `

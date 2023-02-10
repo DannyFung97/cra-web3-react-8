@@ -116,7 +116,7 @@ export const TextStyleCss = css<TextStyleProps>`
   ${(props) => props.darkTertiary && `color: ${props.theme.accentTextDarkTertiary};`}
 
   ${(props) => props.nowrap && `white-space: nowrap;`}
-  ${(props) => props.mont && `font-family: Montserrat;`}
+  ${(props) => props.mont && `font-family: 'Montserrat', sans-serif;`}
   ${(props) => props.info && `color: ${props.theme.accentAction};`}
   ${(props) => props.success && `color: ${props.theme.accentSuccess};`}
   ${(props) => props.warning && `color: ${props.theme.accentWarning};`}
@@ -164,8 +164,10 @@ export const Tspan = styled.span<GeneralTextProps & GeneralProps>`
   ${GeneralCss}
 `
 
-export const TabLabelLink = styled(Tdiv)<GeneralTextProps & GeneralProps & { selected: boolean }>`
+export const TabLabelLink = styled(Tdiv)<GeneralTextProps & GeneralProps & { selected?: boolean }>`
   a {
+    transition: color 300ms;
+    overflow: hidden;
     display: block;
     position: relative;
     padding: 0.2em 0;
@@ -184,9 +186,12 @@ export const TabLabelLink = styled(Tdiv)<GeneralTextProps & GeneralProps & { sel
     background-color: ${({ theme }) => theme.accentAction};
     opacity: ${({ selected }) => (selected ? 1 : 0)};
     transition: opacity 300ms, transform 300ms;
+    transform: translate3d(-100%, 0, 0);
   }
   a:hover::after {
     opacity: 1;
-    transform: translate3d(0, 0.2em, 0);
+    transform: translate3d(0, 0, 0);
   }
+  ${GeneralCss}
+  ${GeneralTextCss}
 `

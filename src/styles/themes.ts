@@ -89,6 +89,16 @@ export const colors = {
   purple700: '#8a00c2',
   purple800: '#7600bc',
   purple900: '#4c00b0',
+  indigo50: '#d1d1fd',
+  indigo100: '#babafc',
+  indigo200: '#a4a2fc',
+  indigo300: '#8d8bfb',
+  indigo400: '#7674fa',
+  indigo500: '#5F5DF9',
+  indigo600: '#4947f8',
+  indigo700: '#3431f7',
+  indigo800: '#1e1bf7',
+  indigo900: '#0c09f2',
 }
 
 const sharedTheme = {
@@ -99,27 +109,27 @@ const sharedTheme = {
 
 export const lightTheme = {
   ...sharedTheme,
-  background: '#faf9fa',
+  background: '#F0F2F5',
   backgroundSurface: colors.white,
   backgroundBackdrop: colors.gray200,
   backgroundInteractive: colors.gray50,
   backgroundScrim: opacify(60, colors.gray900),
   backgroundOutline: colors.gray150,
 
-  textPrimary: opacify(80, colors.gray900),
+  textPrimary: opacify(80, colors.gray700),
   textSecondary: colors.gray400,
   textTertiary: colors.gray300,
 
-  accentAction: colors.blue400,
-  accentActive: colors.blue400,
+  accentAction: colors.indigo500,
+  accentActive: colors.indigo500,
   accentSuccess: colors.green300,
   accentWarning: colors.yellow300,
   accentFailure: colors.red400,
   accentCritical: colors.red400,
   accentInquiry: colors.purple300,
 
-  accentActionSoft: opacify(24, colors.blue400),
-  accentActiveSoft: opacify(24, colors.blue400),
+  accentActionSoft: opacify(24, colors.indigo500),
+  accentActiveSoft: opacify(24, colors.indigo500),
   accentSuccessSoft: opacify(24, colors.green300),
   accentWarningSoft: opacify(24, colors.yellow300),
   accentFailureSoft: opacify(12, colors.red400),
@@ -132,8 +142,8 @@ export const lightTheme = {
   accentFailureHighlighted: colors.red300,
   accentInquiryHighlighted: colors.purple200,
 
-  accentTextDarkPrimary: opacify(80, colors.gray900),
-  accentTextDarkSecondary: opacify(60, colors.gray900),
+  accentTextDarkPrimary: opacify(80, colors.gray700),
+  accentTextDarkSecondary: colors.gray400,
   accentTextDarkTertiary: colors.gray300,
 
   accentTextLightPrimary: colors.gray50,
@@ -176,13 +186,13 @@ export const darkTheme = {
   accentFailureHighlighted: colors.red300,
   accentInquiryHighlighted: colors.purple200,
 
-  accentTextDarkPrimary: opacify(80, colors.gray900),
-  accentTextDarkSecondary: opacify(60, colors.gray900),
-  accentTextDarkTertiary: opacify(24, colors.gray900),
+  accentTextDarkPrimary: opacify(80, colors.gray700),
+  accentTextDarkSecondary: colors.gray400,
+  accentTextDarkTertiary: colors.gray300,
 
   accentTextLightPrimary: colors.gray50,
-  accentTextLightSecondary: opacify(72, colors.gray50),
-  accentTextLightTertiary: opacify(12, colors.gray50),
+  accentTextLightSecondary: colors.gray100,
+  accentTextLightTertiary: colors.gray150,
 }
 
 export type Theme = typeof lightTheme | typeof darkTheme

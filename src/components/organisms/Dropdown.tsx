@@ -32,9 +32,9 @@ export const GenericInputSection = ({
   nohover,
   displayIconOnMobile = true,
 }: {
-  hasArrow?: boolean
   value: string | undefined
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  hasArrow?: boolean
   onClickFront?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onClickBack?: (e: React.ChangeEvent<HTMLInputElement>) => void
   frontButtonDisabled?: boolean
@@ -58,7 +58,7 @@ export const GenericInputSection = ({
     ...style,
     width: w ? w : '100%',
     height: '50px',
-    borderRadius: '12px',
+    borderRadius: '100px',
   }
 
   const gradientStyle = useMemo(
@@ -122,13 +122,13 @@ export const GenericInputSection = ({
           border: 'inherit',
           borderTopLeftRadius:
             isMobile && !displayIconOnMobile
-              ? '10px'
+              ? '100px'
               : frontIcon || frontButtonText || onClickFront
               ? '0px'
               : 'inherit',
           borderBottomLeftRadius:
             isMobile && !displayIconOnMobile
-              ? '10px'
+              ? '100px'
               : frontIcon || frontButtonText || onClickFront
               ? '0px'
               : 'inherit',

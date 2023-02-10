@@ -10,6 +10,7 @@ export const MainNetwork: Network = {
   isTestnet: false,
   supportedTxTypes: [0, 2],
   logo: EthereumLogo,
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpc: {
     urls: ['https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'],
     pollingInterval: 12_000,

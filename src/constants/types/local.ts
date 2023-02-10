@@ -24,9 +24,10 @@ export type WindowDimensions = {
 
 export type CheckboxData = { id: string; checked: boolean }
 
-export type PageInfo = {
+export type RouteInfo = {
   name: string
   title: string
   to: string
   element: JSX.Element
+  children?: string[]
 }

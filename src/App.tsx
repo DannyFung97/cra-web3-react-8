@@ -3,22 +3,31 @@ import { Home as Playground } from './pages/Home'
 
 import { Buffer } from 'buffer'
 import { GlobalStyle, Layout } from './components/atoms/Layout'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { useWindowDimensions } from './hooks/internal/useWindowDimensions'
 import { MobileNavbar, FullNavbar } from './components/organisms/Navbar'
-import { PageInfo } from './constants/types'
+import { RouteInfo } from './constants/types'
 import { RiskMarket } from './pages/RiskMarket'
 import { RiskPool } from './pages/RiskPool'
 import { Dashboard } from './pages/Dashboard'
+import { PageHeader } from './components/organisms/PageHeader'
+import { AnimatePresence } from 'framer-motion'
 
 window.Buffer = window.Buffer || Buffer
 
-const pages: PageInfo[] = [
+const routeInfoArr: RouteInfo[] = [
   {
     name: 'Playground',
     title: 'Playground',
-    to: '/',
+    to: '/playground',
     element: <Playground />,
+  },
+  {
+    name: 'Risk Market',
+    title: 'Risk Market',
+    to: '/',
+    element: <RiskMarket />,
+    children: ['/pool'],
   },
   {
     name: 'Dashboard',
@@ -26,30 +35,26 @@ const pages: PageInfo[] = [
     to: '/dashboard',
     element: <Dashboard />,
   },
-  {
-    name: 'Risk Market',
-    title: 'Risk Market',
-    to: '/market',
-    element: <RiskMarket />,
-  },
 ]
 
 function App(): JSX.Element {
   const { isTablet, isMobile } = useWindowDimensions()
+  const location = useLocation()
 
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter>
-        {isTablet || isMobile ? <MobileNavbar pages={pages} /> : <FullNavbar pages={pages} />}
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Playground />} />
-            <Route path="/market">
-              <Route index element={<RiskMarket />} />
-              <Route path=":id" element={<RiskPool />} />
+
+      {isTablet || isMobile ? <MobileNavbar routeInfoArr={routeInfoArr} /> : <FullNavbar routeInfoArr={routeInfoArr} />}
+      <Layout>
+        <AnimatePresence mode="wait" initial={false}>
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<PageHeader />}>
+              <Route path="/" element={<RiskMarket />} />
+              <Route path="/pool/:id" element={<RiskPool />} />
+              <Route path="/dashboard" element={<Dashboard />} />
             </Route>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/playground" element={<Playground />} />
             <Route
               path="*"
               element={
@@ -69,8 +74,8 @@ function App(): JSX.Element {
               }
             />
           </Routes>
-        </Layout>
-      </BrowserRouter>
+        </AnimatePresence>
+      </Layout>
     </>
   )
 }

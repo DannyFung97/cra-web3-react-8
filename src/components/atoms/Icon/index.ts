@@ -7,6 +7,7 @@ import { DarkTheme } from '@styled-icons/fluentui-system-regular/DarkTheme'
 import { Discord } from '@styled-icons/simple-icons/Discord'
 import { DocumentText } from '@styled-icons/typicons/DocumentText'
 import { Documents } from '@styled-icons/ionicons-sharp/Documents'
+import { Calendar } from '@styled-icons/ionicons-sharp/Calendar'
 import { DotsHorizontalRounded } from '@styled-icons/boxicons-regular/DotsHorizontalRounded'
 import { Github } from '@styled-icons/boxicons-logos/Github'
 import { History } from '@styled-icons/boxicons-regular/History'
@@ -20,6 +21,7 @@ import { Sun } from '@styled-icons/evaicons-solid/Sun'
 import { Twitter } from '@styled-icons/boxicons-logos/Twitter'
 import { Wallet } from '@styled-icons/boxicons-solid/Wallet'
 import { Warning } from '@styled-icons/fluentui-system-regular/Warning'
+import { ArrowIosBackOutline } from '@styled-icons/evaicons-outline/ArrowIosBackOutline'
 
 export const StyledIconCss = css`
   margin: auto;
@@ -82,3 +84,7 @@ export const StyledWarning = styled(Warning)`
 `
 
 export const StyledCopy = styled(Copy)``
+
+export const StyledArrowIosBackOutline = styled(ArrowIosBackOutline)``
+
+export const StyledCalendar = styled(Calendar)``

@@ -10,6 +10,8 @@ import {
   ProviderManager,
   CacheManager,
 } from './context'
+import { RiskMarketManager } from './context/RiskMarketManager'
+import { BrowserRouter } from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -20,7 +22,11 @@ root.render(
           <NetworkManager>
             <ProviderManager>
               <CacheManager>
-                <App />
+                <RiskMarketManager>
+                  <BrowserRouter>
+                    <App />
+                  </BrowserRouter>
+                </RiskMarketManager>
               </CacheManager>
             </ProviderManager>
           </NetworkManager>
