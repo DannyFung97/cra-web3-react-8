@@ -98,13 +98,3 @@ export const ModalRow = styled.div<GeneralProps>`
     align-items: center;
   }
 `
-
-export const ModalCell = styled.div<GeneralTextProps & GeneralProps>`
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  padding: 24px;
-  position: relative;
-  ${GeneralTextCss}
-  ${GeneralCss}
-`

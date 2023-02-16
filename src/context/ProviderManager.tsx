@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, createContext, useContext, PropsWithChildren } from 'react'
 import { useNetwork } from './NetworkManager'
-import { ModalCell } from '../components/atoms/Modal'
 import { Modal } from '../components/molecules/Modal'
 
 import { useGetLatestBlock } from '../hooks/provider/useGetLatestBlock'
@@ -39,6 +38,9 @@ type ProviderContextType = {
   provider: StaticJsonRpcProvider
   signer?: JsonRpcSigner
   openNetworkModal: () => void
+  showTestnets: boolean
+  handleShowTestnets: (show: boolean) => void
+  adjustedNetworks: Network[]
   latestBlock: BlockData
   gasData: GasData | undefined
 }
@@ -47,6 +49,9 @@ const ProviderContext = createContext<ProviderContextType>({
   provider: RPC_PROVIDERS[1],
   signer: undefined,
   openNetworkModal: () => undefined,
+  showTestnets: false,
+  handleShowTestnets: () => undefined,
+  adjustedNetworks: NETWORKS,
   latestBlock: {
     blockNumber: undefined,
     blockTimestamp: undefined,
@@ -69,8 +74,7 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
     const sortedNetworks = NETWORKS.sort((a: Network, b: Network) => {
       return a.isTestnet === b.isTestnet ? 0 : a.isTestnet ? 1 : -1
     })
-    // return showTestnets ? sortedNetworks : sortedNetworks.filter((n: Network) => !n.isTestnet)
-    return sortedNetworks
+    return showTestnets ? sortedNetworks : sortedNetworks.filter((n: Network) => !n.isTestnet)
   }, [showTestnets])
 
   const openModal = useCallback(() => {
@@ -83,6 +87,14 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
     setNetworkModal(false)
   }, [])
 
+  const handleShowTestnets = useCallback((show: boolean) => {
+    setShowTestnets(show)
+  }, [])
+
+  useEffect(() => {
+    setShowTestnets(activeNetwork.isTestnet)
+  }, [activeNetwork])
+
   useEffect(() => {
     closeModal()
   }, [activeNetwork.chainId])
@@ -92,13 +104,26 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
       provider,
       signer,
       openNetworkModal: openModal,
+      showTestnets,
+      handleShowTestnets,
+      adjustedNetworks,
       latestBlock: {
         blockNumber,
         blockTimestamp,
       },
       gasData,
     }),
-    [openModal, blockNumber, blockTimestamp, provider, signer, gasData]
+    [
+      openModal,
+      blockNumber,
+      blockTimestamp,
+      provider,
+      signer,
+      gasData,
+      showTestnets,
+      adjustedNetworks,
+      handleShowTestnets,
+    ]
   )
 
   return (
@@ -123,7 +148,7 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
               Show Test Networks
             </Tdiv>
             <ToggleSwitch
-              id="show-testnets"
+              id="show-testnets-modal"
               toggled={showTestnets}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setShowTestnets(e.target.checked)}
             />
@@ -133,7 +158,6 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
               {adjustedNetworks.map((network: Network) => (
                 <Card
                   px={30}
-                  py={5}
                   canHover
                   key={network.name}
                   onClick={() => changeNetwork(network.chainId)}
@@ -141,13 +165,9 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
                   info={network.chainId === activeNetwork.chainId}
                   style={openStyle(network.isTestnet && showTestnets)}
                 >
-                  <Flex stretch between>
-                    <ModalCell p={10}>
-                      <Tdiv t4 bold>
-                        {network.name}
-                      </Tdiv>
-                    </ModalCell>
-                  </Flex>
+                  <Tdiv t4 bold>
+                    {network.name}
+                  </Tdiv>
                 </Card>
               ))}
             </Flex>

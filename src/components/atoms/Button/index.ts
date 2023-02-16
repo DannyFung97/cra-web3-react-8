@@ -1,8 +1,8 @@
-import { GeneralProps, GeneralCss } from '../../general'
+import { GeneralProps, GeneralCss, ReactProps } from '../../general'
 import styled, { css } from 'styled-components'
 import { Text4Css } from '../Text/fonts'
 
-export interface ClickProps {
+export interface ClickProps extends ReactProps {
   onClick?: any
   disabled?: boolean
 }
@@ -17,7 +17,7 @@ export interface ButtonProps extends ClickProps {
   warning?: boolean
   inquiry?: boolean
   hidden?: boolean
-  noradius?: boolean
+  radius?: number
   nohover?: boolean
   big?: boolean
 }
@@ -92,7 +92,7 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
 export const ButtonAppearanceCss = css<ButtonProps & GeneralProps>`
   outline: none;
   border: none;
-  ${(props) => !props.noradius && `border-radius: 100px;`}
+  ${(props) => `border-radius: ${props.radius ?? 100}px;`}
   transition: all 0.2s, color 0.2s;
   cursor: pointer;
   visibility: ${(props) => (props.hidden ? 'hidden;' : 'visible;')};

@@ -61,7 +61,7 @@ function BeneficiaryDashboard(props: PropsWithChildren): JSX.Element {
       </Flex>
       <Flex col={isMobile} gap={24} justifyCenter>
         <Card p={36}>
-          <Flex col gap={24}>
+          <Flex col gap={24} widthP={100}>
             <Tdiv t6 secondary>
               Add Funds
             </Tdiv>
@@ -78,7 +78,7 @@ function BeneficiaryDashboard(props: PropsWithChildren): JSX.Element {
           </Flex>
         </Card>
         <Card p={36}>
-          <Flex col gap={24}>
+          <Flex col gap={24} widthP={100}>
             <Tdiv t6 secondary>
               Edit Cover Limit
             </Tdiv>
@@ -131,7 +131,7 @@ function UnderwriterDashboard(props: PropsWithChildren): JSX.Element {
         </Card>
       </Flex>
       <Flex col gap={24} justifyCenter>
-        <Card p={36} gap={49} col={isMobile} marginAuto>
+        <Card p={36} gap={49} col={isMobile} marginAuto={!isMobile}>
           <Flex col>
             <Tdiv t6 secondary>
               Pool Name
@@ -160,7 +160,7 @@ function UnderwriterDashboard(props: PropsWithChildren): JSX.Element {
             <Button big>Withdraw</Button>
           </Flex>
         </Card>
-        <Card p={36} gap={49} col={isMobile} marginAuto>
+        <Card p={36} gap={49} col={isMobile} marginAuto={!isMobile}>
           <Flex col>
             <Tdiv t6 secondary>
               Pool Name

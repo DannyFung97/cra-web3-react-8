@@ -4,8 +4,7 @@ import { Home as Playground } from './pages/Home'
 import { Buffer } from 'buffer'
 import { GlobalStyle, Layout } from './components/atoms/Layout'
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { useWindowDimensions } from './hooks/internal/useWindowDimensions'
-import { MobileNavbar, FullNavbar } from './components/organisms/Navbar'
+import { Navbar } from './components/organisms/Navbar'
 import { RouteInfo } from './constants/types'
 import { RiskMarket } from './pages/RiskMarket'
 import { RiskPool } from './pages/RiskPool'
@@ -38,14 +37,12 @@ const routeInfoArr: RouteInfo[] = [
 ]
 
 function App(): JSX.Element {
-  const { isTablet, isMobile } = useWindowDimensions()
   const location = useLocation()
 
   return (
     <>
       <GlobalStyle />
-
-      {isTablet || isMobile ? <MobileNavbar routeInfoArr={routeInfoArr} /> : <FullNavbar routeInfoArr={routeInfoArr} />}
+      <Navbar routeInfoArr={routeInfoArr} />
       <Layout>
         <AnimatePresence mode="wait" initial={false}>
           <Routes location={location} key={location.pathname}>

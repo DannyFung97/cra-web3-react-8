@@ -1,11 +1,9 @@
 import React, { useMemo, useContext, createContext, useEffect, useCallback, PropsWithChildren, useState } from 'react'
 import { useLocalStorage } from 'react-use-storage'
 import { useWallet } from './WalletManager'
-
 import { LocalTx } from '../constants/types'
 import { useNetwork } from '.'
 import { useWeb3React } from '@web3-react/core'
-import { AccountModal } from '../components/organisms/AccountModal'
 /*
 
 This manager caches data such as the user's pending transactions, policies, token and position data.
@@ -17,16 +15,18 @@ should be called manually, such as when the user sends a transaction.
 */
 
 type CacheContextType = {
-  showAccountModal: boolean
-  openAccountModal: () => void
+  showAccount: boolean
+  toggleAccount: () => void
+  closeAccount: () => void
   localTransactions: LocalTx[]
   addLocalTransactions: (txToAdd: LocalTx) => void
   deleteLocalTransactions: (txsToDelete: { hash: string }[]) => void
 }
 
 const CacheContext = createContext<CacheContextType>({
-  showAccountModal: false,
-  openAccountModal: () => undefined,
+  showAccount: false,
+  toggleAccount: () => undefined,
+  closeAccount: () => undefined,
   localTransactions: [],
   addLocalTransactions: () => undefined,
   deleteLocalTransactions: () => undefined,
@@ -39,13 +39,11 @@ export function CacheManager(props: PropsWithChildren): JSX.Element {
   const [localTxs, setLocalTxs] = useLocalStorage<LocalTx[]>('new_loc_txs', [])
   const [accountModal, setAccountModal] = useState<boolean>(false)
 
-  const openModal = useCallback(() => {
-    document.body.style.overflowY = 'hidden'
-    setAccountModal(true)
-  }, [])
+  const toggleAccountModal = useCallback(() => {
+    setAccountModal(!accountModal)
+  }, [accountModal])
 
   const closeModal = useCallback(() => {
-    document.body.style.overflowY = 'scroll'
     setAccountModal(false)
   }, [])
 
@@ -77,26 +75,17 @@ export function CacheManager(props: PropsWithChildren): JSX.Element {
 
   const value = useMemo<CacheContextType>(
     () => ({
-      showAccountModal: accountModal,
-      openAccountModal: openModal,
+      showAccount: accountModal,
+      toggleAccount: toggleAccountModal,
+      closeAccount: closeModal,
       localTransactions: localTxs,
       addLocalTransactions,
       deleteLocalTransactions,
     }),
-    [localTxs, addLocalTransactions, deleteLocalTransactions]
+    [localTxs, addLocalTransactions, deleteLocalTransactions, accountModal, toggleAccountModal, closeModal]
   )
 
-  return (
-    <CacheContext.Provider value={value}>
-      <AccountModal
-        handleClose={closeModal}
-        isOpen={accountModal}
-        modalTitle={'My Account'}
-        disableCloseButton={false}
-      />
-      {props.children}
-    </CacheContext.Provider>
-  )
+  return <CacheContext.Provider value={value}>{props.children}</CacheContext.Provider>
 }
 
 export function useCache(): CacheContextType {

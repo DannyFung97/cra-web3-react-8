@@ -22,11 +22,7 @@ export function Modal(props: ModalProps): JSX.Element {
           <Tdiv t2 bold>
             {props.modalTitle}
           </Tdiv>
-          <ModalCloseButton
-            hidden={props.disableCloseButton}
-            onClick={props.handleClose}
-            lightColor={appTheme == 'dark'}
-          />
+          <CloseButton hidden={props.disableCloseButton} onClick={props.handleClose} lightColor={appTheme == 'dark'} />
         </ModalHeader>
         <HorizontalSeparator mb={20} />
         <Fragment>{props.children}</Fragment>
@@ -43,7 +39,7 @@ export function ModalAddendum(props: PropsWithChildren): JSX.Element {
   )
 }
 
-export const ModalCloseButton: React.FC<ModalButtonProps> = ({ onClick, hidden, lightColor }) => {
+export const CloseButton: React.FC<ModalButtonProps> = ({ onClick, hidden, lightColor }) => {
   return (
     <ModalClose onClick={onClick} hidden={hidden} lightColor={lightColor}>
       <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">

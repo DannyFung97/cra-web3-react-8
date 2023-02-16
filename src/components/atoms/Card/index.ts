@@ -27,6 +27,7 @@ const CardCss = css<CardProps>`
   ${(props) => props.error && `background: ${props.theme.accentCritical};`}
   ${(props) => props.inquiry && `background: ${props.theme.accentInquiry};`}
   ${(props) => props.transparent && `background: rgba(255, 255, 255, 0);`}
+  ${(props) => props.canHover && `&:hover { filter: brightness(1.2); }`}
   ${GeneralCss}
 `
 

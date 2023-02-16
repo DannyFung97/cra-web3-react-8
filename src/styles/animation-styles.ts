@@ -2,27 +2,29 @@ export const variants = {
   slideA: {
     initial: {
       opacity: 0,
+      x: '-10px',
     },
     animate: {
       opacity: 1,
-      x: '10px',
+      x: '0px',
     },
     exit: {
       opacity: 0,
-      x: '0px',
+      x: '-10px',
     },
   },
   slideB: {
     initial: {
       opacity: 0,
+      x: '10px',
     },
     animate: {
       opacity: 1,
-      x: '-10px',
+      x: '0px',
     },
     exit: {
       opacity: 0,
-      x: '0px',
+      x: '10px',
     },
   },
   slideRight: {
