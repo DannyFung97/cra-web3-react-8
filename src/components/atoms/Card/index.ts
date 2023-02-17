@@ -1,10 +1,9 @@
 import styled, { css } from 'styled-components'
 import { GeneralCss } from '../../general'
 import { ClickProps } from '../Button'
-import { GeneralTextProps, GeneralTextCss } from '../Text'
+import { GeneralTextCss } from '../Text'
 import { Flex, FlexProps } from '../Flex'
 import { BKPT_MOBILE_END, BKPT_TABLET_END } from '../../../constants'
-import { motion } from 'framer-motion'
 
 interface CardProps extends ClickProps, FlexProps {
   transparent?: boolean
@@ -14,6 +13,8 @@ interface CardProps extends ClickProps, FlexProps {
   error?: boolean
   info?: boolean
   inquiry?: boolean
+  interactiveBg?: boolean
+  outlined?: boolean
 }
 
 const CardCss = css<CardProps>`
@@ -21,6 +22,8 @@ const CardCss = css<CardProps>`
   padding: 24px;
   background: ${({ theme }) => theme.backgroundSurface};
   transition: all 0.2s ease-in-out;
+  ${(props) => props.outlined && `border: 1px solid ${props.theme.backgroundOutline};`}
+  ${(props) => props.interactiveBg && `background: ${props.theme.backgroundInteractive};`}
   ${(props) => props.success && `background: ${props.theme.accentSuccess};`}
   ${(props) => props.info && `background: ${props.theme.accentAction};`}
   ${(props) => props.warning && `background: ${props.theme.accentWarning};`}

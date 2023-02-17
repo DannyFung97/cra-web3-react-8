@@ -20,9 +20,10 @@ import { useWindowDimensions } from '../../hooks/internal/useWindowDimensions'
 import UnconnectedUser from '../../assets/svg/unconnected_user.svg'
 import { CloseButton } from '../molecules/Modal'
 import { Card } from '../atoms/Card'
-import { AccountPopupPanel } from './AccountPopupPanel'
+import { AccountPopupPanel, AccountPopupPanelMobile } from './AccountPopupPanel'
 import { useOnClickOutside } from '../../hooks/internal/useOnClickOutside'
 import { AccountModal } from './AccountModal'
+import { NetworkPopupPanel, NetworkPopupPanelMobile } from './NetworkPopupNanel'
 
 export function MobileNavPanel(
   props: PropsWithChildren & { show: boolean; setShow: (show: boolean) => void; routeInfoArr: RouteInfo[] }
@@ -84,10 +85,15 @@ export function MobileNavPanel(
 }
 
 export function MobileNavbar(
-  props: PropsWithChildren & { routeInfoArr: RouteInfo[]; buttonRef: React.RefObject<HTMLDivElement> }
+  props: PropsWithChildren & {
+    routeInfoArr: RouteInfo[]
+    accountButtonRef: React.RefObject<HTMLDivElement>
+    networkButtonRef: React.RefObject<HTMLDivElement>
+  }
 ): JSX.Element {
+  const { activeNetwork } = useNetwork()
   const { account } = useWeb3React()
-  const { toggleAccount } = useCache()
+  const { toggleAccount, toggleNetworks } = useCache()
   const [show, setShow] = useState(false)
 
   return (
@@ -99,31 +105,48 @@ export function MobileNavbar(
             <StyledMenu size={40} />
           </Tdiv>
         </Button>
-        <span ref={props.buttonRef}>
-          <Button transparent nohover onClick={toggleAccount}>
-            {account ? (
-              <UserImage width={35} height={35} style={{ margin: 'auto' }}>
-                <img src={makeBlockie(account)} alt={'account'} />
-              </UserImage>
-            ) : (
-              <img src={UnconnectedUser} />
-            )}
-          </Button>
-        </span>
+        <Flex gap={10} pr={20}>
+          <span ref={props.networkButtonRef}>
+            <Button
+              transparent
+              p={4}
+              outlined
+              style={{ borderRadius: '28px', minWidth: 'unset' }}
+              onClick={toggleNetworks}
+            >
+              {activeNetwork.logo && <img src={activeNetwork.logo} width={30} height={30} />}
+            </Button>
+          </span>
+          <span ref={props.accountButtonRef}>
+            <Button transparent nohover onClick={toggleAccount} style={{ borderRadius: '28px', minWidth: 'unset' }}>
+              {account ? (
+                <UserImage width={35} height={35} style={{ margin: 'auto' }}>
+                  <img src={makeBlockie(account)} alt={'account'} />
+                </UserImage>
+              ) : (
+                <img src={UnconnectedUser} />
+              )}
+            </Button>
+          </span>
+        </Flex>
       </Flex>
     </>
   )
 }
 
 export function FullNavbar(
-  props: PropsWithChildren & { routeInfoArr: RouteInfo[]; buttonRef: React.RefObject<HTMLDivElement> }
+  props: PropsWithChildren & {
+    routeInfoArr: RouteInfo[]
+    accountButtonRef: React.RefObject<HTMLDivElement>
+    networkButtonRef: React.RefObject<HTMLDivElement>
+  }
 ): JSX.Element {
   const { account } = useWeb3React()
   const name = useENS()
   const { activeNetwork } = useNetwork()
   const [scrollPosition, setScrollPosition] = useState(0)
   const location = useLocation()
-  const { toggleAccount } = useCache()
+  const { toggleAccount, toggleNetworks } = useCache()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -158,11 +181,35 @@ export function FullNavbar(
           </Flex>
         </Flex>
         <Flex gap={10} itemsCenter>
-          <span ref={props.buttonRef}>
-            <Button nohover p={8} style={{ borderRadius: '28px', minWidth: 'unset' }} onClick={toggleAccount}>
+          <span ref={props.networkButtonRef}>
+            <Button
+              transparent
+              outlined
+              p={8}
+              style={{ borderRadius: '28px', minWidth: 'unset' }}
+              onClick={toggleNetworks}
+            >
+              <Flex>
+                {activeNetwork.logo && (
+                  <img src={activeNetwork.logo} width={30} height={30} style={{ marginRight: '2px' }} />
+                )}
+                <Tdiv nowrap autoAlignVertical>
+                  {activeNetwork.name}
+                </Tdiv>
+              </Flex>
+            </Button>
+          </span>
+          <span ref={props.accountButtonRef}>
+            <Button
+              transparent
+              outlined
+              p={8}
+              style={{ borderRadius: '28px', minWidth: 'unset' }}
+              onClick={toggleAccount}
+            >
               <Flex between gap={5} itemsCenter>
                 {account ? (
-                  <UserImage width={35} height={35} style={{ margin: 'auto' }}>
+                  <UserImage width={30} height={30} style={{ margin: 'auto' }}>
                     <img src={makeBlockie(account)} alt={'account'} />
                   </UserImage>
                 ) : (
@@ -171,31 +218,13 @@ export function FullNavbar(
                 {scrollPosition <= 40 &&
                   (account ? (
                     <Flex col around>
-                      <Tdiv lightPrimary textAlign="left" t4>
+                      <Tdiv textAlign="left" t4>
                         {name ?? shortenAddress(account)}
                       </Tdiv>
-                      <Flex>
-                        {activeNetwork.logo && (
-                          <img src={activeNetwork.logo} width={20} height={20} style={{ marginRight: '2px' }} />
-                        )}
-                        <Tdiv lightPrimary nowrap autoAlignVertical>
-                          {activeNetwork.name}
-                        </Tdiv>
-                      </Flex>
                     </Flex>
                   ) : (
                     <Flex col around>
-                      <Tdiv lightPrimary textAlign="left">
-                        Not connected
-                      </Tdiv>
-                      <Flex>
-                        {activeNetwork.logo && (
-                          <img src={activeNetwork.logo} width={20} height={20} style={{ marginRight: '2px' }} />
-                        )}
-                        <Tdiv lightPrimary textAlign="left" t4 nowrap autoAlignVertical>
-                          {activeNetwork.name}
-                        </Tdiv>
-                      </Flex>
+                      <Tdiv textAlign="left">Not connected</Tdiv>
                     </Flex>
                   ))}
               </Flex>
@@ -209,26 +238,32 @@ export function FullNavbar(
 
 export function Navbar(props: PropsWithChildren & { routeInfoArr: RouteInfo[] }): JSX.Element {
   const { isTablet, isMobile } = useWindowDimensions()
-  const { showAccount, closeAccount } = useCache()
+  const { showAccount, showNetworks, closeAccount, closeNetworks } = useCache()
 
-  const ref = useRef<HTMLDivElement>(null)
-  const accountRef = useRef<HTMLDivElement>(null)
+  const accountButtonRef = useRef<HTMLDivElement>(null)
+  const networkButtonRef = useRef<HTMLDivElement>(null)
+  const accountPanelRef = useRef<HTMLDivElement>(null)
+  const networkPanelRef = useRef<HTMLDivElement>(null)
 
-  useOnClickOutside(ref, showAccount ? closeAccount : undefined, [accountRef])
+  useOnClickOutside(accountButtonRef, showAccount ? closeAccount : undefined, [accountPanelRef])
+  useOnClickOutside(networkButtonRef, showNetworks ? closeNetworks : undefined, [networkPanelRef])
 
   return (
     <TopNav>
-      <span ref={accountRef}>
-        {!isMobile ? (
-          <AccountPopupPanel />
-        ) : (
-          <AccountModal isOpen={showAccount} handleClose={closeAccount} modalTitle={'My Account'} />
-        )}
-      </span>
+      <span ref={accountPanelRef}>{!isMobile ? <AccountPopupPanel /> : <AccountPopupPanelMobile />}</span>
+      <span ref={networkPanelRef}>{!isMobile ? <NetworkPopupPanel /> : <NetworkPopupPanelMobile />}</span>
       {isTablet || isMobile ? (
-        <MobileNavbar routeInfoArr={props.routeInfoArr} buttonRef={ref} />
+        <MobileNavbar
+          routeInfoArr={props.routeInfoArr}
+          accountButtonRef={accountButtonRef}
+          networkButtonRef={networkButtonRef}
+        />
       ) : (
-        <FullNavbar routeInfoArr={props.routeInfoArr} buttonRef={ref} />
+        <FullNavbar
+          routeInfoArr={props.routeInfoArr}
+          accountButtonRef={accountButtonRef}
+          networkButtonRef={networkButtonRef}
+        />
       )}
     </TopNav>
   )

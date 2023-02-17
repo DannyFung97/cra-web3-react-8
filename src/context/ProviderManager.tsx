@@ -128,6 +128,7 @@ export function ProviderManager(props: PropsWithChildren): JSX.Element {
 
   return (
     <ProviderContext.Provider value={value}>
+      {/* This modal is now obselete */}
       <Modal handleClose={closeModal} isOpen={networkModal} modalTitle={'Connect to a network'} zIndex={Z_MODAL + 1}>
         <Flex col gap={10}>
           <Card inquiry>

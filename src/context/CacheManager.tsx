@@ -16,8 +16,11 @@ should be called manually, such as when the user sends a transaction.
 
 type CacheContextType = {
   showAccount: boolean
+  showNetworks: boolean
   toggleAccount: () => void
   closeAccount: () => void
+  toggleNetworks: () => void
+  closeNetworks: () => void
   localTransactions: LocalTx[]
   addLocalTransactions: (txToAdd: LocalTx) => void
   deleteLocalTransactions: (txsToDelete: { hash: string }[]) => void
@@ -25,8 +28,11 @@ type CacheContextType = {
 
 const CacheContext = createContext<CacheContextType>({
   showAccount: false,
+  showNetworks: false,
   toggleAccount: () => undefined,
   closeAccount: () => undefined,
+  toggleNetworks: () => undefined,
+  closeNetworks: () => undefined,
   localTransactions: [],
   addLocalTransactions: () => undefined,
   deleteLocalTransactions: () => undefined,
@@ -38,13 +44,22 @@ export function CacheManager(props: PropsWithChildren): JSX.Element {
   const { activeNetwork } = useNetwork()
   const [localTxs, setLocalTxs] = useLocalStorage<LocalTx[]>('new_loc_txs', [])
   const [accountModal, setAccountModal] = useState<boolean>(false)
+  const [networkModal, setNetworkModal] = useState<boolean>(false)
 
   const toggleAccountModal = useCallback(() => {
     setAccountModal(!accountModal)
   }, [accountModal])
 
-  const closeModal = useCallback(() => {
+  const closeAccountModal = useCallback(() => {
     setAccountModal(false)
+  }, [])
+
+  const toggleNetworkModal = useCallback(() => {
+    setNetworkModal(!networkModal)
+  }, [networkModal])
+
+  const closeNetworkModal = useCallback(() => {
+    setNetworkModal(false)
   }, [])
 
   const addLocalTransactions = useCallback(
@@ -77,12 +92,25 @@ export function CacheManager(props: PropsWithChildren): JSX.Element {
     () => ({
       showAccount: accountModal,
       toggleAccount: toggleAccountModal,
-      closeAccount: closeModal,
+      closeAccount: closeAccountModal,
+      showNetworks: networkModal,
+      toggleNetworks: toggleNetworkModal,
+      closeNetworks: closeNetworkModal,
       localTransactions: localTxs,
       addLocalTransactions,
       deleteLocalTransactions,
     }),
-    [localTxs, addLocalTransactions, deleteLocalTransactions, accountModal, toggleAccountModal, closeModal]
+    [
+      localTxs,
+      addLocalTransactions,
+      deleteLocalTransactions,
+      accountModal,
+      toggleAccountModal,
+      closeAccountModal,
+      networkModal,
+      toggleNetworkModal,
+      closeNetworkModal,
+    ]
   )
 
   return <CacheContext.Provider value={value}>{props.children}</CacheContext.Provider>

@@ -20,6 +20,7 @@ export interface ButtonProps extends ClickProps {
   radius?: number
   nohover?: boolean
   big?: boolean
+  outlined?: boolean
 }
 
 const ButtonColorFunc = (props: ButtonProps, theme: any) => {
@@ -74,7 +75,7 @@ const ButtonColorFunc = (props: ButtonProps, theme: any) => {
     if (props.secondary) hoverBgColor = `${theme.backgroundInteractive}`
     if (props.white) hoverBgColor = `${theme.white}`
     if (props.inquiry) hoverBgColor = `${theme.accentInquiryHighlighted}`
-    if (props.transparent) hoverBgColor = 'transparent'
+    if (props.transparent) hoverBgColor = `rgba(0, 0, 0, 0.1)`
   }
 
   return css`
@@ -97,6 +98,7 @@ export const ButtonAppearanceCss = css<ButtonProps & GeneralProps>`
   cursor: pointer;
   visibility: ${(props) => (props.hidden ? 'hidden;' : 'visible;')};
 
+  ${(props) => props.outlined && `border: 1px solid ${props.theme.backgroundOutline}}`}
   ${(props) => ButtonColorFunc(props, props.theme)}
 
   font-family: 'Open Sans', sans-serif;

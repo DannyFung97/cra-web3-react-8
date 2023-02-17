@@ -43,10 +43,11 @@ export const variants = {
   drop: {
     initial: {
       opacity: 0,
+      y: '-10px',
     },
     animate: {
       opacity: 1,
-      y: '10px',
+      y: '0px',
     },
     exit: {
       opacity: 0,

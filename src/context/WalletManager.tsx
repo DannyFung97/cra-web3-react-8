@@ -43,6 +43,7 @@ export function WalletManager(props: PropsWithChildren): JSX.Element {
 
   return (
     <WalletContext.Provider value={value}>
+      {/* this modal is now obselete */}
       <WalletModal handleClose={closeModal} isOpen={showWalletModal} modalTitle={'Connect a Wallet'} />
       {props.children}
     </WalletContext.Provider>

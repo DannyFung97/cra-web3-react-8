@@ -111,7 +111,7 @@ export const lightTheme = {
   ...sharedTheme,
   background: '#F0F2F5',
   backgroundSurface: colors.white,
-  backgroundBackdrop: colors.gray200,
+  backgroundBackdrop: colors.gray100,
   backgroundInteractive: colors.gray50,
   backgroundScrim: opacify(60, colors.gray900),
   backgroundOutline: colors.gray150,

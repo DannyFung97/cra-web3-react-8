@@ -1,33 +1,26 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import makeBlockie from 'ethereum-blockies-base64'
-import { BKPT_TABLET_END, Z_TABLE } from '../../constants'
 import { ExplorerscanApi } from '../../constants/enums'
-import { useCache, useGeneral } from '../../context'
+import { useGeneral } from '../../context'
 import { useNetwork } from '../../context/NetworkManager'
 import { Modal } from '../molecules/Modal'
 import { Button } from '../atoms/Button'
 import { HyperLink } from '../atoms/Link'
-import { Loader } from '../atoms/Loader'
-import { Table, TableHead, TableHeader, TableRow, TableBody, TableData } from '../atoms/Table'
 import { WalletConnectButton } from '../molecules/WalletConnectButton'
 import { NetworkConnectButton } from '../molecules/NetworkConnectButton'
 import { UserImage } from '../molecules/UserImage'
 import { CopyButton } from '../molecules/CopyButton'
 import { getExplorerItemUrl } from '../../utils/explorer'
-import { timeAgo } from '../../utils/time'
 import { capitalizeFirstLetter, shortenAddress } from '../../utils'
 import { Tdiv } from '../atoms/Text'
-import { Scrollable } from '../atoms/Scroll'
 import { Card } from '../atoms/Card'
 import { Flex } from '../atoms/Flex'
 import { useWeb3React } from '@web3-react/core'
 import { useENS } from '../../hooks/wallet/useENS'
-import { decodeInput } from '../../utils/decoder'
 import { useWindowDimensions } from '../../hooks/internal/useWindowDimensions'
-import { useFetchTxHistoryByAddress } from '../../hooks/api/useTransactionHistory'
-import { useContracts } from '../../context/ContractsManager'
 import { ConnectionType, getConnectionName, SUPPORTED_WALLETS } from '../../wallet'
 import { ModalProps } from '../atoms/Modal'
+import { RecentActivityTable } from './RecentActivityTable'
 
 export const AccountModal: React.FC<ModalProps> = (props) => {
   /*************************************************************************************
@@ -36,11 +29,8 @@ export const AccountModal: React.FC<ModalProps> = (props) => {
 
   const { selectedProvider } = useGeneral()
   const { activeNetwork } = useNetwork()
-  const { localTransactions } = useCache()
-  const { contractSources } = useContracts()
   const { account, connector } = useWeb3React()
-  const { width, isMobile } = useWindowDimensions()
-  const txHistory = useFetchTxHistoryByAddress()
+  const { isMobile } = useWindowDimensions()
   const name = useENS()
 
   return (
@@ -99,79 +89,7 @@ export const AccountModal: React.FC<ModalProps> = (props) => {
           <Tdiv t2 bold mb={10}>
             Recent Transactions
           </Tdiv>
-          <Scrollable p={0} maxDesktopHeight={'30vh'}>
-            <Table textAlign="center" style={{ borderSpacing: '0px 7px' }}>
-              <TableHead sticky zIndex={Z_TABLE + 1}>
-                <TableRow>
-                  <TableHeader>Type</TableHeader>
-                  {width > BKPT_TABLET_END && (
-                    <>
-                      {/* <TableHeader>Content</TableHeader> */}
-                      <TableHeader>Time</TableHeader>
-                    </>
-                  )}
-                  <TableHeader>Hash</TableHeader>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {localTransactions.map((pendingtx: any) => (
-                  <TableRow key={pendingtx.hash}>
-                    <TableData pl={isMobile ? 0 : undefined} pr={isMobile ? 0 : undefined} pt={5} pb={5} t4>
-                      <Tdiv>{pendingtx.type}</Tdiv>
-                    </TableData>
-                    {width > BKPT_TABLET_END && (
-                      <>
-                        <TableData pt={5} pb={5} t4>
-                          <Tdiv>{timeAgo(Number(Date.now()) * 1000)}</Tdiv>
-                        </TableData>
-                      </>
-                    )}
-                    <TableData pt={5} pb={5} t4 pl={isMobile ? 0 : undefined} pr={isMobile ? 0 : undefined}>
-                      <HyperLink
-                        href={getExplorerItemUrl(activeNetwork.explorer.url, pendingtx.hash, ExplorerscanApi.TX)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button>{shortenAddress(pendingtx.hash)}</Button>
-                      </HyperLink>
-                    </TableData>
-                  </TableRow>
-                ))}
-                {txHistory &&
-                  txHistory.map((tx: any) => (
-                    <TableRow key={tx.hash}>
-                      <TableData t4 pt={5} pb={5} pl={isMobile ? 0 : undefined} pr={isMobile ? 0 : undefined}>
-                        {txHistory.length > 0 ? (
-                          <Tdiv error={tx.txreceipt_status != '1'}>
-                            {capitalizeFirstLetter(decodeInput(tx, contractSources)?.name ?? '?')}
-                          </Tdiv>
-                        ) : (
-                          <Loader width={10} height={10} />
-                        )}
-                      </TableData>
-                      {width > BKPT_TABLET_END && (
-                        <TableData pt={5} pb={5} t4>
-                          {txHistory.length > 0 && (
-                            <Tdiv error={tx.txreceipt_status != '1'}>{timeAgo(Number(tx.timeStamp) * 1000)}</Tdiv>
-                          )}
-                        </TableData>
-                      )}
-                      <TableData t4 pt={5} pb={5} pl={isMobile ? 0 : undefined} pr={isMobile ? 0 : undefined}>
-                        {txHistory.length > 0 && (
-                          <HyperLink
-                            href={getExplorerItemUrl(activeNetwork.explorer.url, tx.hash, ExplorerscanApi.TX)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Button>{shortenAddress(tx.hash)} </Button>
-                          </HyperLink>
-                        )}
-                      </TableData>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </Scrollable>
+          <RecentActivityTable />
         </>
       )}
     </Modal>
